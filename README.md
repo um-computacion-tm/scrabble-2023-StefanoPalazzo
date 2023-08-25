@@ -1,1 +1,2 @@
 readme
+pip install pyrae
