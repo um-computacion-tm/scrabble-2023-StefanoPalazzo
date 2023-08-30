@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.0.7] - 2023-08-30
+
+### Added
+
+- Turns system and function to change turns
+
+### Changed
+
+- Now you can exchange more than one tile at once
+
+
 ## [0.0.6] - 2023-08-28
 
 ### Added

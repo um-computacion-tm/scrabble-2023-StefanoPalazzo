@@ -54,10 +54,9 @@ class BagTiles():
 
     def put(self, tiles):
         self.tiles.extend(tiles)
+        random.shuffle(self.tiles)
 
-class Player():
-    def __init__(self):
-        pass
+
 
 # a = BagTiles().take(3)
 # print (a[0].get_value)
