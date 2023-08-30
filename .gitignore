@@ -3,3 +3,4 @@ __pycache__/*
 */__pycache__/*x
 __pycache__
 data.json
+tests/__pycache__/*

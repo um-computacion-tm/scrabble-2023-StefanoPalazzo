@@ -7,5 +7,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Clear Pip Cache
+          command: pip3  cache purge
+      - run:
+          name: Install Dependencies
+          command: pip3 install -r requirements.txt
+      - run:
           name: Running Tests
           command: coverage run -m unittest && coverage xml && coverage report -m

@@ -11,6 +11,26 @@ class TestScrabbleGame(unittest.TestCase):
             3,
         )
         self.assertIsNotNone(scrabble_game.bag_tiles)
+    
+    def test_turns_2players(self):
+        Game = ScrabbleGame(2)
+        self.assertEqual(Game.turn, 0)
+        Game.next_turn()
+        self.assertEqual(Game.turn, 1)
+        Game.next_turn()
+        self.assertEqual(Game.turn, 0)
+    
+    def test_turns_4players(self):
+        Game = ScrabbleGame(4)
+        self.assertEqual(Game.turn, 0)
+        Game.next_turn()
+        self.assertEqual(Game.turn, 1)
+        Game.next_turn()
+        self.assertEqual(Game.turn, 2)
+        Game.next_turn()
+        self.assertEqual(Game.turn, 3)
+        Game.next_turn()
+        self.assertEqual(Game.turn, 0)
 
 
 if __name__ == '__main__':

@@ -14,5 +14,7 @@ class Cell:
             return 0
         if self.multiplier_type == 'letter':
             return self.letter.value * self.multiplier
+        elif self.multiplier_type == 'letter':
+            None
         else:
             return self.letter.value
