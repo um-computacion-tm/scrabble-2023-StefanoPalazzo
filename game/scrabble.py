@@ -22,17 +22,3 @@ class ScrabbleGame:
             self.turn = 0
 
 
-Game = ScrabbleGame(4)
-print (Game.turn)
-Game.next_turn()
-print (Game.turn)
-Game.next_turn()
-print (Game.turn)
-Game.next_turn()
-print (Game.turn)
-Game.next_turn()
-print (Game.turn)
-Game.next_turn()
-print (Game.turn)
-Game.next_turn()
-print (Game.turn)

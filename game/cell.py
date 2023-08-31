@@ -1,10 +1,10 @@
 from game.models import Tile
 
 class Cell:
-    def __init__(self, multiplier, multiplier_type):
+    def __init__(self,letter = None, multiplier = 1, multiplier_type=None):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
-        self.letter = None
+        self.letter = letter
 
     def add_letter(self, letter:Tile):
         self.letter = letter
@@ -13,8 +13,9 @@ class Cell:
         if self.letter is None:
             return 0
         if self.multiplier_type == 'letter':
-            return self.letter.value * self.multiplier
-        elif self.multiplier_type == 'letter':
-            None
+            value = self.letter.value * self.multiplier
+            self.multiplier_type = None                   # Deactivates the multiplier of the cell
+            return value
         else:
             return self.letter.value
+        
