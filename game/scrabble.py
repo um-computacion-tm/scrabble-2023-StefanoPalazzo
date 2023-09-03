@@ -22,3 +22,4 @@ class ScrabbleGame:
             self.turn = 0
 
 
+

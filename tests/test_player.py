@@ -18,7 +18,7 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(len(bag),93)
         TilesZero = bag.copy()
         player_2.exchange([0])
-        self.assertNotEquals(TilesZero,player_2.tiles)
+        self.assertNotEqual(TilesZero,player_2.tiles)
         self.assertEqual(len(TilesZero),len(bag))
         self.assertEqual(len(bag),93)
 
