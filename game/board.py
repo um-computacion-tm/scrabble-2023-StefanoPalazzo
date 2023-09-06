@@ -1,18 +1,7 @@
 from game.cell import Cell
 from game.models import Tile, BagTiles
+from game.tools import Tools
 
-
-def rotate(mat):
-    N = len(mat)
-    
-    # Transpose the matrix
-    for i in range(N):
-        for j in range(i + 1, N):
-            mat[i][j], mat[j][i] = mat[j][i], mat[i][j]
-    
-    # Invert rows
-    for i in range(N):
-        mat[i] = mat[i][::-1]
 
 
 class Board:
@@ -40,22 +29,47 @@ class Board:
             self.grid[6][2] = Cell(' ', 2, 'letter')
             self.grid[2][6] = Cell(' ', 2, 'letter')
             self.grid[7][3] = Cell(' ', 2, 'letter')
-            rotate(self.grid)
+            Tools.rotate(self.grid)
             self.grid[7][7] = Cell(' ', 2, 'word')
 
-def calculate_word_value(word):
-        word_value = 0
-        word_multiplier = 1
+    def show_board(self):
+        boardRow = ''
+        print ('   ' + '  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15')
+        for i in range(15):
+            for j in range(15):
+                if self.grid[i][j].letter != ' ':
+                    boardRow += '[' + self.grid[i][j].letter + ' ]'
+                elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
+                    boardRow += '[' + '2W' + ']'
+                elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 3: 
+                    boardRow += '[' + '3W' + ']'
+                elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 2:
+                    boardRow += '[' + '2L' + ']'
+                elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 3:
+                    boardRow += '[' + '3L' + ']'
+                else:
+                    boardRow += '[ ' + self.grid[i][j].letter + ']'
+            if (i+1) <= 9:
+                print (str(i+1) + '  ' + boardRow)
+            else:
+                print (str(i+1) + ' ' + boardRow)
+            boardRow = ''
+
+    def put_words(self,word, location, orientation):
+        N = location[0]
+        M = location[1]
         for i in word:
-            word_value += i.calculate_value()
-            if i.multiplier_type == 'word':
-                word_multiplier = i.multiplier
-                i.multiplier_type = None         # Deactivates the multiplier of the cell
-        word_value *= word_multiplier 
-        return(word_value)
+            self.grid[N][M] = i.letter
+            if orientation == 'H':
+                M += 1
+            elif orientation == 'V':
+                N += 1
+        
+    
 
 
 # # Shows the multiplier distribution
+# boardEx = Board()
 # boardMatrix = []
 # for i in range(15):
 #     for j in range(15):
@@ -88,7 +102,7 @@ def calculate_word_value(word):
 #     a[6][2] = 'DL'
 #     a[2][6] = 'DL'
 #     a[7][3] = 'DL'
-#     rotate(a)
+#     Tools.rotate(a)
     
 # a[7][7] = ' X'
 
