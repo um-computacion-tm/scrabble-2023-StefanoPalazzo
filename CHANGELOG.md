@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+
+## [0.1.0] - 2023-09-06
+
+### Added
+
+- Function to put words in the board
+- Tools class with useful functions
+
+### Changed
+
+- Calculate_word_value function moved to Tools
+- Rotate matrix function moved to Tools
+
 ## [0.0.9] - 2023-09-02
 
 ### Added
