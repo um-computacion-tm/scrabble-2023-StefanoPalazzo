@@ -61,13 +61,31 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.grid[7][5], word[2].letter)
         self.assertEqual(board.grid[8][5], word[3].letter)
 
-    # def test_word_inside_board(self):
-    #     board = Board()
-    #     word = 'facultad'
-    #     location = (14, 4)
-    #     orientation = 'H'
-    #     word_is_valid = board.validate_word_inside_board(word,location, orientation)
-    #     assert word_is_valid == True
+    def test_word_inside_board_horizontal(self):
+        board = Board()
+        word = [
+           Cell(letter=Tile('C', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('S', 2)),
+           Cell(letter=Tile('A', 1)),
+       ]
+        location = (14, 4)
+        orientation = 'H'
+        word_is_valid = board.validate_word_inside_board(word,location, orientation)
+        assert word_is_valid == True
+
+    def test_word_inside_board_vertical(self):
+        board = Board()
+        word = [
+           Cell(letter=Tile('C', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('S', 2)),
+           Cell(letter=Tile('A', 1)),
+       ]
+        location = (14, 4)
+        orientation = 'V'
+        word_is_valid = board.validate_word_inside_board(word,location, orientation)
+        assert word_is_valid == False
 
 
 
