@@ -4,6 +4,8 @@ from game.cell import Cell
 from game.models import Tile
 
 
+
+
 class TestBoard(unittest.TestCase):
     def test_init(self):
         board = Board()
@@ -113,6 +115,7 @@ class TestBoard(unittest.TestCase):
         orientation = 'V'
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
         assert word_is_valid == True
+    
 
 
 if __name__ == '__main__':

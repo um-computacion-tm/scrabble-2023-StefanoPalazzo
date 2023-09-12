@@ -35,7 +35,7 @@ class Board:
 
     def show_board(self):
         boardRow = ''
-        print ('   ' + '  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15')
+        print ('                    ' + '  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15')
         for i in range(15):
             for j in range(15):
                 if self.grid[i][j].letter != ' ':
@@ -51,9 +51,9 @@ class Board:
                 else:
                     boardRow += '[ ' + self.grid[i][j].letter + ']'
             if (i+1) <= 9:
-                print (str(i+1) + '  ' + boardRow)
+                print ('                 '  + str(i+1) + '  ' + boardRow)
             else:
-                print (str(i+1) + ' ' + boardRow)
+                print ('                 '  + str(i+1) + ' ' + boardRow)
             boardRow = ''
 
     def put_words(self,word, location, orientation):
