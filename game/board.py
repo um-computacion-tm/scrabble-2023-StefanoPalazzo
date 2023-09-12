@@ -1,6 +1,7 @@
 from game.cell import Cell
 from game.models import Tile, BagTiles
 from game.tools import Tools
+from colorama import Fore,Style
 
 
 
@@ -40,13 +41,13 @@ class Board:
                 if self.grid[i][j].letter != ' ':
                     boardRow += '[' + self.grid[i][j].letter + ' ]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
-                    boardRow += '[' + '2W' + ']'
+                    boardRow += f'[{Fore.MAGENTA}{Style.BRIGHT}2W{Style.RESET_ALL}]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 3: 
-                    boardRow += '[' + '3W' + ']'
+                    boardRow += f'[{Fore.RED}{Style.BRIGHT}3W{Style.RESET_ALL}]'
                 elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 2:
-                    boardRow += '[' + '2L' + ']'
+                    boardRow += f'[{Fore.CYAN}{Style.BRIGHT}2L{Style.RESET_ALL}]'
                 elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 3:
-                    boardRow += '[' + '3L' + ']'
+                    boardRow += f'[{Fore.BLUE}{Style.BRIGHT}2L{Style.RESET_ALL}]'
                 else:
                     boardRow += '[ ' + self.grid[i][j].letter + ']'
             if (i+1) <= 9:
@@ -56,57 +57,44 @@ class Board:
             boardRow = ''
 
     def put_words(self,word, location, orientation):
-        N = location[0]
-        M = location[1]
+        N = location[0] - 1 
+        M = location[1] - 1
         for i in word:
             self.grid[N][M] = i.letter
             if orientation == 'H':
                 M += 1
             elif orientation == 'V':
                 N += 1
-        
+    
+    def validate_word_inside_board(self, word,location, orientation):
+        N = location[0] - 1
+        M = location[1] - 1
+        if orientation == 'H':
+            if (M + len(word )) > 15:
+                return False
+            else:
+                return True
+        elif orientation == 'V':
+            if (N + len(word)) > 15:
+                return False
+            else: 
+                return True
+
+    
     
 
 
-# # Shows the multiplier distribution
-# boardEx = Board()
-# boardMatrix = []
-# for i in range(15):
-#     for j in range(15):
-#         boardMatrix.append([boardEx.grid[i][j].multiplier])
-#     print (boardMatrix)
-#     boardMatrix = []
+# word = [
+#            Cell(letter=Tile('C', 1)),
+#            Cell(letter=Tile('A', 1)),
+#            Cell(letter=Tile('S', 2)),
+#            Cell(letter=Tile('A', 1)),
+#        ]
 
-
-# # # Shows the board scheme
-# a = [
-#           [ '  ' for _ in range(15) ]
-#             for _ in range(15)
-#         ]
-# for i in range(4):            # Creates the diagonal
-#     for i in range(7):
-#      for j in range (7):
-#         if i == 0:
-#             a[i][i] = 'TP'
-#         elif i == 5:
-#             a[i][i] = 'TL'
-#         elif i == 6:
-#             a[i][i] = 'DL'
-#         else:
-#          a[i][i] = 'DP'
-#     a[7][0] = 'TP'
-#     a[5][1] = 'TL'
-#     a[1][5] = 'TL'
-#     a[0][3] = 'DL'
-#     a[3][0] = 'DL'
-#     a[6][2] = 'DL'
-#     a[2][6] = 'DL'
-#     a[7][3] = 'DL'
-#     Tools.rotate(a)
-    
-# a[7][7] = ' X'
-
-# for i in  range(15):
-#      print (a[i])
-
-
+# while 1 == 1:
+#     N = int(input ('N: '))
+#     M = int(input ('M: '))
+#     array = [N,M]
+#     orientation = input ('orientation: ')
+#     board1.put_words(word, array, orientation)
+#     board1.show_board()

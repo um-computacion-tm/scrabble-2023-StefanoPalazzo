@@ -1,1 +1,3 @@
 coverage==7.3.0
+colorama==0.4.4
+pyrae==0.1.4
