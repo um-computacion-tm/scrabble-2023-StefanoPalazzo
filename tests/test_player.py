@@ -41,7 +41,12 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(player_1.score,0)
         self.assertEqual(player_2.score,0)
 
-
+    def test_shuffle_tiles(self):
+        game = ScrabbleGame(1)
+        player_1 = game.players[0]
+        original_tiles = player_1.tiles.copy()
+        player_1.shuffle_tiles()
+        self.assertNotEqual(original_tiles, player_1.tiles)
 
 if __name__ == '__main__':
     unittest.main()

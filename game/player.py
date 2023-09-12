@@ -1,5 +1,5 @@
 from game.models import Tile,BagTiles
-
+import random
 
 
 
@@ -15,4 +15,6 @@ class Player:
             del self.tiles[i]
             self.tiles.insert(i, self.game.bag_tiles.take(1))
 
+    def shuffle_tiles(self):
+        random.shuffle(self.tiles)
 
