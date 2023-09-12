@@ -19,8 +19,9 @@ class ScrabbleGame:
         if self.turn >= len(self.players):
             self.turn = 0
 
-    def validate_word(self,word,location,orientation):
-        None
+    
+
+    
 
     
 

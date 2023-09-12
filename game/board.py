@@ -80,9 +80,9 @@ class Board:
             else: 
                 return True
 
+    
+    
 
-# board1 = Board()
-# board1.show_board()
 
 # word = [
 #            Cell(letter=Tile('C', 1)),

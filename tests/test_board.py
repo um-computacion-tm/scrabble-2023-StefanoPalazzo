@@ -40,10 +40,10 @@ class TestBoard(unittest.TestCase):
             Cell(letter=Tile('A', 1)),
         ]
         board.put_words(word, position, orientation)
-        self.assertEqual(board.grid[5][5], word[0].letter)
-        self.assertEqual(board.grid[5][6], word[1].letter)
-        self.assertEqual(board.grid[5][7], word[2].letter)
-        self.assertEqual(board.grid[5][8], word[3].letter)
+        self.assertEqual(board.grid[4][4], word[0].letter)
+        self.assertEqual(board.grid[4][5], word[1].letter)
+        self.assertEqual(board.grid[4][6], word[2].letter)
+        self.assertEqual(board.grid[4][7], word[3].letter)
 
     def test_put_word_vertical(self):
         board = Board()
@@ -56,12 +56,12 @@ class TestBoard(unittest.TestCase):
             Cell(letter=Tile('A', 1)),
         ]
         board.put_words(word, position, orientation)
-        self.assertEqual(board.grid[5][5], word[0].letter)
-        self.assertEqual(board.grid[6][5], word[1].letter)
-        self.assertEqual(board.grid[7][5], word[2].letter)
-        self.assertEqual(board.grid[8][5], word[3].letter)
+        self.assertEqual(board.grid[4][4], word[0].letter)
+        self.assertEqual(board.grid[5][4], word[1].letter)
+        self.assertEqual(board.grid[6][4], word[2].letter)
+        self.assertEqual(board.grid[7][4], word[3].letter)
 
-    def test_word_inside_board_horizontal(self):
+    def test_word_inside_board_horizontal_true(self):
         board = Board()
         word = [
            Cell(letter=Tile('C', 1)),
@@ -74,7 +74,21 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
         assert word_is_valid == True
 
-    def test_word_inside_board_vertical(self):
+    def test_word_inside_board_horizontal_false(self):
+        board = Board()
+        word = [
+           Cell(letter=Tile('C', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('S', 2)),
+           Cell(letter=Tile('A', 1)),
+       ]
+        location = (14, 15)
+        orientation = 'H'
+        word_is_valid = board.validate_word_inside_board(word,location, orientation)
+        assert word_is_valid == False
+        
+
+    def test_word_inside_board_vertical_false(self):
         board = Board()
         word = [
            Cell(letter=Tile('C', 1)),
@@ -87,6 +101,18 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
         assert word_is_valid == False
 
+    def test_word_inside_board_vertical_true(self):
+        board = Board()
+        word = [
+           Cell(letter=Tile('C', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('S', 2)),
+           Cell(letter=Tile('A', 1)),
+       ]
+        location = (5, 4)
+        orientation = 'V'
+        word_is_valid = board.validate_word_inside_board(word,location, orientation)
+        assert word_is_valid == True
 
 
 if __name__ == '__main__':
