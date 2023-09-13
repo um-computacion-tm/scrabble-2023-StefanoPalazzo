@@ -36,15 +36,13 @@ class Tools:
         pattern = r'.*Versión electrónica 23.6 del «Diccionario de la lengua española», obra lexicográfica académica por excelencia.'
         # Text with definitions
         text = res._meta_description
-        # Searchs for the pattern in the output
+        # Searchs for the pattern in the outersión electróniput
         resultado = re.search(pattern, text)
         # Check if there is coincidence
         if resultado:
             return False
         else:
             return True
-
-
 
 
 
