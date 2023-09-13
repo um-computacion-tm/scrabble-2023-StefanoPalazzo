@@ -32,13 +32,7 @@ class TestScrabbleGame(unittest.TestCase):
         Game.next_turn()
         self.assertEqual(Game.turn, 0)
 
-    def test_turn_0(self):
-        Game = ScrabbleGame(2)
-        self.assertEqual(Game.turn, 0)
-        Game.next_turn()
-        self.assertEqual(Game.turn, 1)
-        Game.next_turn()
-        self.assertEqual(Game.turn, 0)
+    
         
 if __name__ == '__main__':
     unittest.main()

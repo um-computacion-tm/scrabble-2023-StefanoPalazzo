@@ -65,4 +65,3 @@ class BagTiles():
 # for i in range(len(BagTiles().tiles)):         
 #       print (BagTiles().tiles[i].letter,BagTiles().tiles[i].value)
 
-

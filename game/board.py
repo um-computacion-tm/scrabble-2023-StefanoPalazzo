@@ -2,6 +2,7 @@ from game.cell import Cell
 from game.models import Tile, BagTiles
 from game.tools import Tools
 from colorama import Fore,Style
+from game.player import Player
 
 
 
@@ -80,8 +81,41 @@ class Board:
             else: 
                 return True
 
+    def validate_tiles_for_word(self, word, location, orientation, playerTiles):
+        N = location[0] - 1 
+        M = location[1] - 1
+        
+        playerTilesToVerify = []
+        for i in playerTiles:
+            playerTilesToVerify.append(i.letter)
+        print (playerTilesToVerify)
+        for i in word:
+            if i.letter.letter == self.grid[N][M].letter:
+                pass
+            elif i.letter.letter in playerTilesToVerify:
+                playerTilesToVerify.remove(i.letter.letter)
+            else:
+                return False
+                   
+            if orientation == 'H':
+                M += 1
+            elif orientation == 'V':
+                N += 1
+        return True
     
-    
+
+
+word1 = [
+            Cell(letter=Tile('C', 1)),
+            Cell(letter=Tile('A', 1)),
+            Cell(letter=Tile('S', 2)),
+            Cell(letter=Tile('A', 1)),
+        ]
+
+
+
+
+
 
 
 # word = [

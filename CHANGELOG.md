@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.1] - 2023-09-13
+
+### Added
+
+- Function to verify if the user can create the word
+- Surrender option added
+
+### Fixed
+
+- Now main shows tiles 'LL','CH','RR' as 1 tile
+
 ## [0.2.0] - 2023-09-12
 
 ### Added

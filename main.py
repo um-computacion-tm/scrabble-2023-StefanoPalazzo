@@ -15,8 +15,9 @@ def player_tiles():
     print ('Player', game.turn+1, 'tiles:')
     tiles = []
     for i in game.players[game.turn].tiles:
-        tiles += i.letter
+        tiles.append(i.letter)
     print ('                   ' , tiles)
+
 
 def main_menu():
     separator()
@@ -35,15 +36,18 @@ print ('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 numPlayers = int(input('Select the number of players: '))
 game = ScrabbleGame(numPlayers)
 game_status = True
+    
 
 while game_status == True:
     main_menu()
     print ('')
     print ('Choose an option: ')
-    print ('                    A- Exchange Tiles   B- Put word   C- Shuffle')
+    print ('                    A- Exchange Tiles   B- Put word   C- Shuffle   D - Surrender')
     option = input ()
     if option.upper() == 'C':
         game.players[game.turn].shuffle_tiles()
+    if option.upper() == 'D':
+        game_status = False
     else:
         game.next_turn()
-        game.players[0].score += 5
+

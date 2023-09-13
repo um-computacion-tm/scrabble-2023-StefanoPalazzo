@@ -2,6 +2,8 @@ import unittest
 from game.board import Board
 from game.cell import Cell
 from game.models import Tile
+from game.player import Player
+from game.scrabble import ScrabbleGame
 
 
 
@@ -116,6 +118,45 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
         assert word_is_valid == True
     
+    def test_validate_tiles_for_word_PlayerHasTiles(self):
+        board1 = Board()
+        Player1 = Player(ScrabbleGame(1))
+        location = [5,5]
+        orientation = 'H'
+        Player1.tiles.append(Tile('C', 1))
+        Player1.tiles.append(Tile('A', 1))
+        Player1.tiles.append(Tile('S', 1))
+        Player1.tiles.append(Tile('A', 1))
+        word = [
+           Cell(letter=Tile('C', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('S', 2)),
+           Cell(letter=Tile('A', 1)),
+       ]
+        result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
+        self.assertEqual(result, True)
+
+    def test_validate_tiles_for_word_PlayerHasSomeTiles_BoardHasTiles(self):
+        board1 = Board()
+        board1.grid[4][4] = Tile('C', 1)
+        board1.grid[4][6] = Tile('S', 1)
+        Player1 = Player(ScrabbleGame(1))
+        location = [5,5]
+        orientation = 'H'
+        Player1.tiles = []
+        Player1.tiles.append(Tile('K', 1))
+        Player1.tiles.append(Tile('A', 1))
+        Player1.tiles.append(Tile('F', 1))
+        Player1.tiles.append(Tile('A', 1))
+        word = [
+           Cell(letter=Tile('C', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('S', 2)),
+           Cell(letter=Tile('A', 1)),
+       ]
+        result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
+        self.assertEqual(result, True)
+
 
 
 if __name__ == '__main__':
