@@ -9,6 +9,7 @@ from game.scrabble import ScrabbleGame
 
 
 class TestBoard(unittest.TestCase):
+
     def test_init(self):
         board = Board()
         self.assertEqual(
@@ -90,7 +91,7 @@ class TestBoard(unittest.TestCase):
         orientation = 'H'
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
         assert word_is_valid == False
-        
+
 
     def test_word_inside_board_vertical_false(self):
         board = Board()
@@ -157,6 +158,79 @@ class TestBoard(unittest.TestCase):
         result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
         self.assertEqual(result, True)
 
+    def test_validate_tiles_for_word_PlayerDoesNotHaveTiles(self):
+        board1 = Board()
+        Player1 = Player(ScrabbleGame(1))
+        location = [5,5]
+        orientation = 'H'
+        word = [
+           Cell(letter=Tile('C', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('S', 2)),
+           Cell(letter=Tile('A', 1)),
+       ]
+        result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
+        self.assertEqual(result, False)
+    
+    def test_first_word_passes_by_the_center(self):
+        board1 = Board()
+        location = [8,5]
+        orientation = 'H'
+        word = [
+           Cell(letter=Tile('L', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('T', 2)),
+           Cell(letter=Tile('A', 1)),
+       ]
+        result = board1.validate_word_is_connected(word, location, orientation)
+        self.assertTrue(result)
+
+    def test_first_word_does_not_pass_by_the_center(self):
+        board1 = Board()
+        location = [10,10]
+        orientation = 'H'
+        word = [
+           Cell(letter=Tile('L', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('T', 2)),
+           Cell(letter=Tile('A', 1)),
+       ]
+        result = board1.validate_word_is_connected(word, location, orientation)
+        self.assertFalse(result)
+
+    def test_word_is_connected(self):
+        board1 = Board()
+        board1.grid[7][7].letter = 'C'
+        board1.grid[7][8].letter = 'A'
+        board1.grid[7][9].letter = 'S'
+        board1.grid[7][10].letter = 'A'
+        location = [7,9]
+        orientation = 'V'
+        word = [
+           Cell(letter=Tile('L', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('T', 2)),
+           Cell(letter=Tile('A', 1)),
+       ]
+        result = board1.validate_word_is_connected(word, location, orientation)
+        self.assertTrue(result)
+
+    def test_word_is_not_connected(self):
+        board1 = Board()
+        board1.grid[7][7].letter = 'C'
+        board1.grid[7][8].letter = 'A'
+        board1.grid[7][9].letter = 'S'
+        board1.grid[7][10].letter = 'A'
+        location = [2,2]
+        orientation = 'V'
+        word = [
+           Cell(letter=Tile('L', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('T', 2)),
+           Cell(letter=Tile('A', 1)),
+       ]
+        result = board1.validate_word_is_connected(word, location, orientation)
+        self.assertFalse(result)
 
 
 if __name__ == '__main__':
