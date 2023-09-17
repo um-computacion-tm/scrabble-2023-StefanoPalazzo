@@ -84,11 +84,9 @@ class Board:
     def validate_tiles_for_word(self, word, location, orientation, playerTiles):
         N = location[0] - 1 
         M = location[1] - 1
-        
         playerTilesToVerify = []
         for i in playerTiles:
             playerTilesToVerify.append(i.letter)
-        print (playerTilesToVerify)
         for i in word:
             if i.letter.letter == self.grid[N][M].letter:
                 pass
@@ -103,18 +101,19 @@ class Board:
                 N += 1
         return True
     
-
-
-word1 = [
-            Cell(letter=Tile('C', 1)),
-            Cell(letter=Tile('A', 1)),
-            Cell(letter=Tile('S', 2)),
-            Cell(letter=Tile('A', 1)),
-        ]
-
-
-
-
+    def validate_word_is_connected(self,word, location, orientation):
+        N = location[0] - 1 
+        M = location[1] - 1
+        for i in range(len(word)):
+            if N == 7 and M == 7 and self.grid[7][7].letter == ' ':  # Checks that the first word passes through the center
+                return True
+            if self.grid[N][M].letter != ' ': # Checks that the word is connected by at least one letter to another word
+                return True
+            if orientation == 'H':
+                M += 1
+            elif orientation == 'V':
+                N += 1
+        return False
 
 
 

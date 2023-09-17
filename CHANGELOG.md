@@ -3,11 +3,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+
+## [0.2.2] - 2023-09-17
+
+### Added
+
+- Function to verify if the first word passes through the center
+- FUnction to verify if the word is connected by at least one letter to another word
+
+
+
 ## [0.2.1] - 2023-09-13
 
 ### Added
 
-- Function to verify if the user can create the word
+- Function to verify if the user has the tiles and can create the word
 - Surrender option added
 
 ### Fixed
