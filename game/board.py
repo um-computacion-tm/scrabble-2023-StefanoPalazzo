@@ -114,15 +114,22 @@ class Board:
             elif orientation == 'V':
                 N += 1
         return False
+    
+    def validate_word_overlapping_is_possible(self, word, location, orientation):
+        N = location[0] - 1 
+        M = location[1] - 1
+        for i in word:
+            if self.grid[N][M].letter == ' ':
+                pass
+            elif self.grid[N][M].letter != i.letter.letter:
+                return False
+            if orientation == 'H':
+                M += 1
+            elif orientation == 'V':
+                N += 1
+        return True
 
 
-
-# word = [
-#            Cell(letter=Tile('C', 1)),
-#            Cell(letter=Tile('A', 1)),
-#            Cell(letter=Tile('S', 2)),
-#            Cell(letter=Tile('A', 1)),
-#        ]
 
 # while 1 == 1:
 #     N = int(input ('N: '))
