@@ -101,7 +101,7 @@ class TestBoard(unittest.TestCase):
            Cell(letter=Tile('S', 2)),
            Cell(letter=Tile('A', 1)),
        ]
-        location = (14, 4)
+        location = [14, 4]                    # User location starts at 1 instead of 0
         orientation = 'V'
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
         assert word_is_valid == False
@@ -114,7 +114,7 @@ class TestBoard(unittest.TestCase):
            Cell(letter=Tile('S', 2)),
            Cell(letter=Tile('A', 1)),
        ]
-        location = (5, 4)
+        location = [5, 4]                    # User location starts at 1 instead of 0
         orientation = 'V'
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
         assert word_is_valid == True
@@ -122,7 +122,7 @@ class TestBoard(unittest.TestCase):
     def test_validate_tiles_for_word_PlayerHasTiles(self):
         board1 = Board()
         Player1 = Player(ScrabbleGame(1))
-        location = [5,5]
+        location = [5,5]                    # User location starts at 1 instead of 0
         orientation = 'H'
         Player1.tiles.append(Tile('C', 1))
         Player1.tiles.append(Tile('A', 1))
@@ -142,7 +142,7 @@ class TestBoard(unittest.TestCase):
         board1.grid[4][4] = Tile('C', 1)
         board1.grid[4][6] = Tile('S', 1)
         Player1 = Player(ScrabbleGame(1))
-        location = [5,5]
+        location = [5,5]                    # User location starts at 1 instead of 0
         orientation = 'H'
         Player1.tiles = []
         Player1.tiles.append(Tile('K', 1))
@@ -161,8 +161,8 @@ class TestBoard(unittest.TestCase):
     def test_validate_tiles_for_word_PlayerDoesNotHaveTiles(self):
         board1 = Board()
         Player1 = Player(ScrabbleGame(1))
-        location = [5,5]
-        orientation = 'H'
+        location = [5,5]                    # User location starts at 1 instead of 0
+        orientation = 'V'
         word = [
            Cell(letter=Tile('C', 1)),
            Cell(letter=Tile('A', 1)),
@@ -174,7 +174,7 @@ class TestBoard(unittest.TestCase):
     
     def test_first_word_passes_by_the_center(self):
         board1 = Board()
-        location = [8,5]
+        location = [8,5]                    # User location starts at 1 instead of 0
         orientation = 'H'
         word = [
            Cell(letter=Tile('L', 1)),
@@ -187,7 +187,7 @@ class TestBoard(unittest.TestCase):
 
     def test_first_word_does_not_pass_by_the_center(self):
         board1 = Board()
-        location = [10,10]
+        location = [10,10]                    # User location starts at 1 instead of 0
         orientation = 'H'
         word = [
            Cell(letter=Tile('L', 1)),
@@ -204,7 +204,7 @@ class TestBoard(unittest.TestCase):
         board1.grid[7][8].letter = 'A'
         board1.grid[7][9].letter = 'S'
         board1.grid[7][10].letter = 'A'
-        location = [7,9]
+        location = [7,9]                    # User location starts at 1 instead of 0
         orientation = 'V'
         word = [
            Cell(letter=Tile('L', 1)),
@@ -221,7 +221,7 @@ class TestBoard(unittest.TestCase):
         board1.grid[7][8].letter = 'A'
         board1.grid[7][9].letter = 'S'
         board1.grid[7][10].letter = 'A'
-        location = [2,2]
+        location = [2,2]                    # User location starts at 1 instead of 0
         orientation = 'V'
         word = [
            Cell(letter=Tile('L', 1)),
@@ -230,6 +230,57 @@ class TestBoard(unittest.TestCase):
            Cell(letter=Tile('A', 1)),
        ]
         result = board1.validate_word_is_connected(word, location, orientation)
+        self.assertFalse(result)
+
+    def test_word_overlapping_is_possible_horizontal_True(self):
+        board1 = Board()
+        board1.grid[7][7].letter = 'C'
+        board1.grid[8][7].letter = 'A'
+        board1.grid[9][7].letter = 'S'
+        board1.grid[10][7].letter = 'A'
+        location = [8,9]                  # User location starts at 1 instead of 0
+        orientation = 'H'
+        word = [
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('L', 1)),
+           Cell(letter=Tile('A', 2)),
+           Cell(letter=Tile('S', 1)),
+               ]
+        result = board1.validate_word_overlapping_is_possible(word, location, orientation)
+        self.assertTrue(result)
+
+    def test_word_overlapping_is_possible_Vertical_True(self):
+        board1 = Board()
+        board1.grid[7][7].letter = 'C'
+        board1.grid[7][8].letter = 'A'
+        board1.grid[7][9].letter = 'S'
+        board1.grid[7][10].letter = 'A'
+        location = [8,9]                  # User location starts at 1 instead of 0
+        orientation = 'V'
+        word = [
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('L', 1)),
+           Cell(letter=Tile('A', 2)),
+           Cell(letter=Tile('S', 1)),
+               ]
+        result = board1.validate_word_overlapping_is_possible(word, location, orientation)
+        self.assertTrue(result)
+
+    def test_word_overlapping_is_possible_False(self):
+        board1 = Board()
+        board1.grid[7][7].letter = 'N'
+        board1.grid[7][8].letter = 'O'
+        board1.grid[7][9].letter = 'T'
+        board1.grid[7][10].letter = 'A'
+        location = [8,9]                  # User location starts at 1 instead of 0
+        orientation = 'V'
+        word = [
+           Cell(letter=Tile('P', 1)),
+           Cell(letter=Tile('A', 1)),
+           Cell(letter=Tile('L', 2)),
+           Cell(letter=Tile('A', 1)),
+               ]
+        result = board1.validate_word_overlapping_is_possible(word, location, orientation)
         self.assertFalse(result)
 
 
