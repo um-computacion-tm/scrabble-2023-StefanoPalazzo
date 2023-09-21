@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.4] - 2023-09-21
+
+### Changed
+
+- Now 'validate_word_overlapping_is_possible' receives words as a string instead of tiles
+- Now 'validate_tiles_for_word' receives words as a string instread of tiles
+- Tests were updated to send words as a String
+
 ## [0.2.3] - 2023-09-18
 
 ### Added

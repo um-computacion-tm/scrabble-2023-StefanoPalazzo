@@ -88,10 +88,10 @@ class Board:
         for i in playerTiles:
             playerTilesToVerify.append(i.letter)
         for i in word:
-            if i.letter.letter == self.grid[N][M].letter:
+            if i == self.grid[N][M].letter:
                 pass
-            elif i.letter.letter in playerTilesToVerify:
-                playerTilesToVerify.remove(i.letter.letter)
+            elif i in playerTilesToVerify:
+                playerTilesToVerify.remove(i)
             else:
                 return False
                    
@@ -121,13 +121,16 @@ class Board:
         for i in word:
             if self.grid[N][M].letter == ' ':
                 pass
-            elif self.grid[N][M].letter != i.letter.letter:
+            elif self.grid[N][M].letter != i:
                 return False
             if orientation == 'H':
                 M += 1
             elif orientation == 'V':
                 N += 1
         return True
+
+
+
 
 
 
