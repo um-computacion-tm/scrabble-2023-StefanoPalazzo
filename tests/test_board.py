@@ -38,33 +38,23 @@ class TestBoard(unittest.TestCase):
         board = Board()
         position = [5,5]
         orientation = 'H'
-        word = [
-            Cell(letter=Tile('C', 1)),
-            Cell(letter=Tile('A', 1)),
-            Cell(letter=Tile('S', 2)),
-            Cell(letter=Tile('A', 1)),
-        ]
+        word = 'CASA'
         board.put_words(word, position, orientation)
-        self.assertEqual(board.grid[4][4], word[0].letter)
-        self.assertEqual(board.grid[4][5], word[1].letter)
-        self.assertEqual(board.grid[4][6], word[2].letter)
-        self.assertEqual(board.grid[4][7], word[3].letter)
+        self.assertEqual(board.grid[4][4], word[0])
+        self.assertEqual(board.grid[4][5], word[1])
+        self.assertEqual(board.grid[4][6], word[2])
+        self.assertEqual(board.grid[4][7], word[3])
 
     def test_put_word_vertical(self):
         board = Board()
         position = [5,5]
         orientation = 'V'
-        word = [
-            Cell(letter=Tile('C', 1)),
-            Cell(letter=Tile('A', 1)),
-            Cell(letter=Tile('S', 2)),
-            Cell(letter=Tile('A', 1)),
-        ]
+        word = 'CASA'
         board.put_words(word, position, orientation)
-        self.assertEqual(board.grid[4][4], word[0].letter)
-        self.assertEqual(board.grid[5][4], word[1].letter)
-        self.assertEqual(board.grid[6][4], word[2].letter)
-        self.assertEqual(board.grid[7][4], word[3].letter)
+        self.assertEqual(board.grid[4][4], word[0])
+        self.assertEqual(board.grid[5][4], word[1])
+        self.assertEqual(board.grid[6][4], word[2])
+        self.assertEqual(board.grid[7][4], word[3])
 
     def test_word_inside_board_horizontal_true(self):
         board = Board()
@@ -100,8 +90,9 @@ class TestBoard(unittest.TestCase):
         assert word_is_valid == True
     
     def test_validate_tiles_for_word_PlayerHasTiles(self):
+        game = ScrabbleGame(1)
         board1 = Board()
-        Player1 = Player(ScrabbleGame(1))
+        Player1 = game.players[0]
         location = [5,5]                    # User location starts at 1 instead of 0
         orientation = 'H'
         Player1.tiles.append(Tile('C', 1))

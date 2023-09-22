@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.5] - 2023-09-22
+
+### Added
+
+- 'validate_and_put_word' function that validates all the requirements and finally puts the word in the board
+- Now "Option B: 'Put Word'" activates the 'validate_and_put_word' function 
+
+### Fixed
+
+- Error that changes turns in the game when you Shuffle your tiles
+- 'Put_word' function was changing Cells for Strings
+- 'Calculate_word_value' parameters error when it is imported to another file
+
+
 ## [0.2.4] - 2023-09-21
 
 ### Changed

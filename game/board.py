@@ -61,7 +61,7 @@ class Board:
         N = location[0] - 1 
         M = location[1] - 1
         for i in word:
-            self.grid[N][M] = i.letter
+            self.grid[N][M] = i
             if orientation == 'H':
                 M += 1
             elif orientation == 'V':
@@ -129,9 +129,7 @@ class Board:
                 N += 1
         return True
 
-
-
-
+    
 
 
 # while 1 == 1:
