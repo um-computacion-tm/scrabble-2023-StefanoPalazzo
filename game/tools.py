@@ -4,15 +4,16 @@ from game.cell import Cell
 from game.models import Tile
 
 class Tools:
-    def calculate_word_value(word):
+    def calculate_word_value(word,):
         word_value = 0
         word_multiplier = 1
+        word_to_calculate = []
         for i in word:
             word_value += i.calculate_value()
             if i.multiplier_type == 'word':
-                word_multiplier = i.multiplier
+                word_multiplier = i.multiplier   # Activates Word Multiplier
                 i.multiplier_type = None         # Deactivates the multiplier of the cell
-        word_value *= word_multiplier 
+        word_value *= word_multiplier            
         return(word_value)
     
     def rotate(mat):
@@ -30,7 +31,7 @@ class Tools:
     def validate_word_in_RAE(self, word):
         wordToCheck = ''
         for i in word:
-            wordToCheck += i.letter.letter
+            wordToCheck += i
         res = dle.search_by_word(wordToCheck)
         # Text that appears when the word doesn't exists
         pattern = r'.*Versión electrónica 23.6 del «Diccionario de la lengua española», obra lexicográfica académica por excelencia.'

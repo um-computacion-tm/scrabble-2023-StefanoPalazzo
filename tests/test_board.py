@@ -38,42 +38,27 @@ class TestBoard(unittest.TestCase):
         board = Board()
         position = [5,5]
         orientation = 'H'
-        word = [
-            Cell(letter=Tile('C', 1)),
-            Cell(letter=Tile('A', 1)),
-            Cell(letter=Tile('S', 2)),
-            Cell(letter=Tile('A', 1)),
-        ]
+        word = 'CASA'
         board.put_words(word, position, orientation)
-        self.assertEqual(board.grid[4][4], word[0].letter)
-        self.assertEqual(board.grid[4][5], word[1].letter)
-        self.assertEqual(board.grid[4][6], word[2].letter)
-        self.assertEqual(board.grid[4][7], word[3].letter)
+        self.assertEqual(board.grid[4][4], word[0])
+        self.assertEqual(board.grid[4][5], word[1])
+        self.assertEqual(board.grid[4][6], word[2])
+        self.assertEqual(board.grid[4][7], word[3])
 
     def test_put_word_vertical(self):
         board = Board()
         position = [5,5]
         orientation = 'V'
-        word = [
-            Cell(letter=Tile('C', 1)),
-            Cell(letter=Tile('A', 1)),
-            Cell(letter=Tile('S', 2)),
-            Cell(letter=Tile('A', 1)),
-        ]
+        word = 'CASA'
         board.put_words(word, position, orientation)
-        self.assertEqual(board.grid[4][4], word[0].letter)
-        self.assertEqual(board.grid[5][4], word[1].letter)
-        self.assertEqual(board.grid[6][4], word[2].letter)
-        self.assertEqual(board.grid[7][4], word[3].letter)
+        self.assertEqual(board.grid[4][4], word[0])
+        self.assertEqual(board.grid[5][4], word[1])
+        self.assertEqual(board.grid[6][4], word[2])
+        self.assertEqual(board.grid[7][4], word[3])
 
     def test_word_inside_board_horizontal_true(self):
         board = Board()
-        word = [
-           Cell(letter=Tile('C', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('S', 2)),
-           Cell(letter=Tile('A', 1)),
-       ]
+        word = 'CASA'
         location = (14, 4)
         orientation = 'H'
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
@@ -81,12 +66,7 @@ class TestBoard(unittest.TestCase):
 
     def test_word_inside_board_horizontal_false(self):
         board = Board()
-        word = [
-           Cell(letter=Tile('C', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('S', 2)),
-           Cell(letter=Tile('A', 1)),
-       ]
+        word = 'CASA'
         location = (14, 15)
         orientation = 'H'
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
@@ -95,12 +75,7 @@ class TestBoard(unittest.TestCase):
 
     def test_word_inside_board_vertical_false(self):
         board = Board()
-        word = [
-           Cell(letter=Tile('C', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('S', 2)),
-           Cell(letter=Tile('A', 1)),
-       ]
+        word = 'CASA'
         location = [14, 4]                    # User location starts at 1 instead of 0
         orientation = 'V'
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
@@ -108,32 +83,23 @@ class TestBoard(unittest.TestCase):
 
     def test_word_inside_board_vertical_true(self):
         board = Board()
-        word = [
-           Cell(letter=Tile('C', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('S', 2)),
-           Cell(letter=Tile('A', 1)),
-       ]
+        word = 'CASA'
         location = [5, 4]                    # User location starts at 1 instead of 0
         orientation = 'V'
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
         assert word_is_valid == True
     
     def test_validate_tiles_for_word_PlayerHasTiles(self):
+        game = ScrabbleGame(1)
         board1 = Board()
-        Player1 = Player(ScrabbleGame(1))
+        Player1 = game.players[0]
         location = [5,5]                    # User location starts at 1 instead of 0
         orientation = 'H'
         Player1.tiles.append(Tile('C', 1))
         Player1.tiles.append(Tile('A', 1))
         Player1.tiles.append(Tile('S', 1))
         Player1.tiles.append(Tile('A', 1))
-        word = [
-           Cell(letter=Tile('C', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('S', 2)),
-           Cell(letter=Tile('A', 1)),
-       ]
+        word = 'CASA'
         result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
         self.assertEqual(result, True)
 
@@ -149,12 +115,7 @@ class TestBoard(unittest.TestCase):
         Player1.tiles.append(Tile('A', 1))
         Player1.tiles.append(Tile('F', 1))
         Player1.tiles.append(Tile('A', 1))
-        word = [
-           Cell(letter=Tile('C', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('S', 2)),
-           Cell(letter=Tile('A', 1)),
-       ]
+        word = 'CASA'
         result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
         self.assertEqual(result, True)
 
@@ -163,12 +124,7 @@ class TestBoard(unittest.TestCase):
         Player1 = Player(ScrabbleGame(1))
         location = [5,5]                    # User location starts at 1 instead of 0
         orientation = 'V'
-        word = [
-           Cell(letter=Tile('C', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('S', 2)),
-           Cell(letter=Tile('A', 1)),
-       ]
+        word = 'CASA'
         result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
         self.assertEqual(result, False)
     
@@ -176,12 +132,7 @@ class TestBoard(unittest.TestCase):
         board1 = Board()
         location = [8,5]                    # User location starts at 1 instead of 0
         orientation = 'H'
-        word = [
-           Cell(letter=Tile('L', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('T', 2)),
-           Cell(letter=Tile('A', 1)),
-       ]
+        word = 'LATA'
         result = board1.validate_word_is_connected(word, location, orientation)
         self.assertTrue(result)
 
@@ -189,12 +140,7 @@ class TestBoard(unittest.TestCase):
         board1 = Board()
         location = [10,10]                    # User location starts at 1 instead of 0
         orientation = 'H'
-        word = [
-           Cell(letter=Tile('L', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('T', 2)),
-           Cell(letter=Tile('A', 1)),
-       ]
+        word = 'LATA'
         result = board1.validate_word_is_connected(word, location, orientation)
         self.assertFalse(result)
 
@@ -206,12 +152,7 @@ class TestBoard(unittest.TestCase):
         board1.grid[7][10].letter = 'A'
         location = [7,9]                    # User location starts at 1 instead of 0
         orientation = 'V'
-        word = [
-           Cell(letter=Tile('L', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('T', 2)),
-           Cell(letter=Tile('A', 1)),
-       ]
+        word = 'LATA'
         result = board1.validate_word_is_connected(word, location, orientation)
         self.assertTrue(result)
 
@@ -223,12 +164,7 @@ class TestBoard(unittest.TestCase):
         board1.grid[7][10].letter = 'A'
         location = [2,2]                    # User location starts at 1 instead of 0
         orientation = 'V'
-        word = [
-           Cell(letter=Tile('L', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('T', 2)),
-           Cell(letter=Tile('A', 1)),
-       ]
+        word = 'LATA'
         result = board1.validate_word_is_connected(word, location, orientation)
         self.assertFalse(result)
 
@@ -238,14 +174,9 @@ class TestBoard(unittest.TestCase):
         board1.grid[8][7].letter = 'A'
         board1.grid[9][7].letter = 'S'
         board1.grid[10][7].letter = 'A'
-        location = [8,9]                  # User location starts at 1 instead of 0
+        location = [9,8]                  # User location starts at 1 instead of 0
         orientation = 'H'
-        word = [
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('L', 1)),
-           Cell(letter=Tile('A', 2)),
-           Cell(letter=Tile('S', 1)),
-               ]
+        word = 'ALAS'
         result = board1.validate_word_overlapping_is_possible(word, location, orientation)
         self.assertTrue(result)
 
@@ -257,12 +188,7 @@ class TestBoard(unittest.TestCase):
         board1.grid[7][10].letter = 'A'
         location = [8,9]                  # User location starts at 1 instead of 0
         orientation = 'V'
-        word = [
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('L', 1)),
-           Cell(letter=Tile('A', 2)),
-           Cell(letter=Tile('S', 1)),
-               ]
+        word = 'ALAS'
         result = board1.validate_word_overlapping_is_possible(word, location, orientation)
         self.assertTrue(result)
 
@@ -274,12 +200,7 @@ class TestBoard(unittest.TestCase):
         board1.grid[7][10].letter = 'A'
         location = [8,9]                  # User location starts at 1 instead of 0
         orientation = 'V'
-        word = [
-           Cell(letter=Tile('P', 1)),
-           Cell(letter=Tile('A', 1)),
-           Cell(letter=Tile('L', 2)),
-           Cell(letter=Tile('A', 1)),
-               ]
+        word = 'PALA'
         result = board1.validate_word_overlapping_is_possible(word, location, orientation)
         self.assertFalse(result)
 

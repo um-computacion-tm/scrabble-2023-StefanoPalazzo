@@ -8,23 +8,13 @@ from game.tools import Tools
 class TestTools(unittest.TestCase):
     def test_word_in_RAE_exists(self):
 
-        word1 = [
-            Cell(letter=Tile('C', 1)),
-            Cell(letter=Tile('A', 1)),
-            Cell(letter=Tile('S', 2)),
-            Cell(letter=Tile('A', 1)),
-        ]
+        word1 = 'CASA'
         exists = Tools().validate_word_in_RAE(word1)
         self.assertTrue(exists)
 
     def test_word_in_RAE_not_exists(self):
 
-        word1 = [
-            Cell(letter=Tile('A', 1)),
-            Cell(letter=Tile('B', 1)),
-            Cell(letter=Tile('C', 2)),
-            Cell(letter=Tile('D', 1)),
-        ]
+        word1 = 'ABCD'
         exists = Tools().validate_word_in_RAE(word1)
         self.assertFalse(exists)
 
