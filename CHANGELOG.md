@@ -3,6 +3,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.6] - 2023-09-24
+
+### Added
+
+- Now game supports words with accent marks
+
+### Fixed
+
+- Error displaying the board
+- Error when you put a word that starts with a letter of the board
+- 'Put_word' function was changing Cells for Strings
+- Initial board emptyCells where made by strings instead of tiles (Without letters)
+- Error when you wanted to create a word with letters in the board
+- Error when you put words that deletes the existing one in the board
+
 ## [0.2.5] - 2023-09-22
 
 ### Added
@@ -13,7 +28,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 - Error that changes turns in the game when you Shuffle your tiles
-- 'Put_word' function was changing Cells for Strings
 - 'Calculate_word_value' parameters error when it is imported to another file
 
 

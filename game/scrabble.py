@@ -6,6 +6,7 @@ from game.tools import Tools
 
 
 
+
 class ScrabbleGame:
     def __init__(self, players_count):
         self.board = Board()
@@ -31,7 +32,7 @@ class ScrabbleGame:
             return ('Error! User does not have required tiles')
 
         v3 = self.board.validate_word_is_connected(word, location, orientation)
-        if not v3 and self.board.grid[7][7].letter == ' ':
+        if not v3 and self.board.grid[7][7].letter.letter == ' ':
             return ('Error! Word does not passes by the center. Try with [8][8]')
         elif not v3:
             return ('Error! Word is not connected to others')
@@ -46,16 +47,21 @@ class ScrabbleGame:
         
         wordToColocate = []
         N = location[0] - 1
-        M = location[1] - 1
+        M = location[1] - 1 
         for i in word:
-            if self.board.grid[N][M].letter != ' ':
-                if self.board.grid[N][M].letter.letter == i:
-                    wordToColocate.append(self.board.grid[N][M].letter)  # Appends the cell in the board
+            if self.board.grid[N][M].letter.letter != ' ':        # Checks if the cell is empty     
+                    wordToColocate.append(self.board.grid[N][M].letter)  # Appends the tile in the board
             else:
-                for j in self.players[self.turn].tiles: 
+                for j in playerTiles: 
                     if i == j.letter:
                         wordToColocate.append(playerTiles.pop(playerTiles.index(j))) # Appends the tile of the user
                         break
+            if orientation == 'H':
+                M += 1
+            elif orientation == 'V':
+                N += 1
+
+            
         self.board.put_words(wordToColocate, location, orientation)
         playerTiles.extend(self.bag_tiles.take(len(word)))  # User takes tiles from the bag
         # self.players[self.turn].score += Tools().calculate_word_value(wordToColocate)
