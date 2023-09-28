@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch
+from game.models import Tile
 from io import StringIO
 from game.board import Board
 import re
@@ -45,7 +46,7 @@ class TestShowBoard(unittest.TestCase):
     @patch('sys.stdout', new_callable=StringIO)
     def test_show_board_with_letter(self, mock_stdout):
         board1 = Board()
-        board1.grid[0][0].letter = 'A'
+        board1.grid[0][0].letter = Tile('A',1)
         # Llama a la función que deseas probar
         board1.show_board()
 

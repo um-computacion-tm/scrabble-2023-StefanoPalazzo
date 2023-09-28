@@ -54,45 +54,61 @@ class TestScrabbleGame(unittest.TestCase):
         result = game.validate_and_put_word('MAR',[10,10],'H')
         self.assertEqual(result, 'Error! Word does not passes by the center. Try with [8][8]')
 
-    def test_validate_and_put_word_doesnt_pass_by_the_center(self):
+    def test_validate_and_put_word_is_not_connected(self):
         game = ScrabbleGame(1)
-        game.board.grid[7][7].letter = 'A' # This simulates a word put in the center
-        game.players[0].tiles.append(Tile('M',1))
-        game.players[0].tiles.append(Tile('A',1))
-        game.players[0].tiles.append(Tile('R',1))
-        result = game.validate_and_put_word('MAR',[10,10],'H')
+        game.board.put_words([Tile('T',1),Tile('E',1)], [8,8], 'H') # This puts 'TE' in the center
+        game.players[0].tiles.append(Tile('S',1))
+        game.players[0].tiles.append(Tile('O',1))
+        game.players[0].tiles.append(Tile('L',1))
+        result = game.validate_and_put_word('SOL',[2,2],'H')
         self.assertEqual(result, 'Error! Word is not connected to others')
 
     def test_validate_and_put_word_conflicts_with_another_word(self):
         game = ScrabbleGame(1)
-        game.board.grid[7][7].letter = 'T'
-        game.board.grid[7][8].letter = 'E'
+        game.board.put_words([Tile('T',1),Tile('E',1)], [8,8], 'H')
         game.players[0].tiles.append(Tile('M',1))
         game.players[0].tiles.append(Tile('A',1))
         game.players[0].tiles.append(Tile('R',1))
         result = game.validate_and_put_word('MAR',[7,9],'V') # User Location starts at 1, instead of 0
         self.assertEqual(result, 'Error! Word enters in conflict with other words.')
 
-    def test_validate_and_put_word_conflicts_with_another_word(self):
+    def test_validate_and_put_word_is_not_in_RAE(self):
         game = ScrabbleGame(1)
-        game.board.grid[7][7].letter = 'T'
-        game.board.grid[7][8].letter = 'E'
         game.players[0].tiles.append(Tile('R',1))
         game.players[0].tiles.append(Tile('E',1))
         game.players[0].tiles.append(Tile('L',1))
-        result = game.validate_and_put_word('REL',[7,9],'V') # User Location starts at 1, instead of 0
+        result = game.validate_and_put_word('REL',[8,8],'V') # User Location starts at 1, instead of 0
         self.assertEqual(result, 'Error! Word was not found in RAE dictionary')
 
-    def test_validate_and_put_word_conflicts_with_another_word_succesfull(self):
+    def test_validate_and_put_word_succesful(self):
         game = ScrabbleGame(1)
-        game.board.grid[7][7].letter = 'T'
-        game.board.grid[7][8].letter = 'E'
+        game.board.grid[7][7].letter = Tile('T',1)
+        game.board.grid[7][8].letter = Tile('E',1)
         game.players[0].tiles.append(Tile('V',1))
         game.players[0].tiles.append(Tile('E',1))
         game.players[0].tiles.append(Tile('R',1))
         result = game.validate_and_put_word('VER',[7,9],'V') # User Location starts at 1, instead of 0
         self.assertEqual(result, 'Word succesfully colocated.')
 
+    def test_validate_and_put_word_without_accent_mark_error(self):
+        game = ScrabbleGame(1)
+        game.players[0].tiles.append(Tile('A',1))
+        game.players[0].tiles.append(Tile('V',1))
+        game.players[0].tiles.append(Tile('I',1))
+        game.players[0].tiles.append(Tile('O',1))
+        game.players[0].tiles.append(Tile('N',1))
+        result = game.validate_and_put_word('AVION',[8,8],'V') # User Location starts at 1, instead of 0
+        self.assertEqual(result, 'Error! Word was not found in RAE dictionary')
+
+    def test_validate_and_put_word_with_accent_mark_succesful(self):
+        game = ScrabbleGame(1)
+        game.players[0].tiles.append(Tile('A',1))
+        game.players[0].tiles.append(Tile('V',1))
+        game.players[0].tiles.append(Tile('I',1))
+        game.players[0].tiles.append(Tile('O',1))
+        game.players[0].tiles.append(Tile('N',1))
+        result = game.validate_and_put_word('AVIÓN',[8,8],'V') # User Location starts at 1, instead of 0
+        self.assertEqual(result, 'Word succesfully colocated.')
         
 if __name__ == '__main__':
     unittest.main()
