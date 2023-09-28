@@ -210,6 +210,14 @@ class TestBoard(unittest.TestCase):
         result = board1.validate_word_overlapping_is_possible(word, location, orientation)
         self.assertFalse(result)
 
+    def test_get_cells_of_a_word_in_the_board(self):
+        board1 = Board()
+        board1.grid[7][7].letter = Tile('C', 1)
+        board1.grid[7][8].letter = Tile('A', 1)
+        board1.grid[7][9].letter = Tile('S', 1)
+        board1.grid[7][10].letter = Tile('A', 1)
+        cells = board1.cells_of_word_in_board('CASA', [8,8], 'H')
+        self.assertEqual(cells, [board1.grid[7][7],board1.grid[7][8],board1.grid[7][9],board1.grid[7][10]])
 
 if __name__ == '__main__':
     unittest.main()

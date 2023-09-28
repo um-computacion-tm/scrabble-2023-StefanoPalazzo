@@ -8,7 +8,7 @@ from unidecode import unidecode
 
 class Board:
     def __init__(self):
-        emptyCell = Cell(' ', 1)
+        emptyCell = Tile(' ', 1)
         self.grid = [
             [ Cell(emptyCell,1, None) for _ in range(15) ]
             for _ in range(15)
@@ -133,8 +133,23 @@ class Board:
             elif orientation == 'V':
                 N += 1
         return True
-
     
+    def cells_of_word_in_board(self, word, location, orientation):
+        N = location[0] - 1 
+        M = location[1] - 1
+        word_cells = []
+        word = unidecode(word)
+        for i in word:
+            word_cells.append(self.grid[N][M])
+            if orientation == 'H':
+                M += 1
+            elif orientation == 'V':
+                N += 1
+        return word_cells
+
+
+
+
 
 
 # while 1 == 1:

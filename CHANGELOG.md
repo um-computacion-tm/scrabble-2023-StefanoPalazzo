@@ -3,7 +3,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [0.2.6] - 2023-09-24
+## [0.2.7] - 2023-09-28
+
+### Added
+
+- Function to get the cells of a word in the board
+- Game score automatically sums up after each word put in the board
+
+
+## [0.2.6] - 2023-09-27
 
 ### Added
 

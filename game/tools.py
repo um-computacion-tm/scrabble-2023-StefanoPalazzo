@@ -6,7 +6,7 @@ from game.models import Tile
 
 
 class Tools:
-    def calculate_word_value(word):
+    def calculate_word_value(self, word:list[Cell]):
         word_value = 0
         word_multiplier = 1
         word_to_calculate = []

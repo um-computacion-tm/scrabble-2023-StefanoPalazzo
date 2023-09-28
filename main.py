@@ -47,7 +47,7 @@ while game_status == True:
     print ('                    A- Exchange Tiles   B- Put word   C- Shuffle   D - Surrender')
     option = input ()
     if option.upper() == 'B':
-        word = unidecode(input('Type the word you want to put: '))
+        word = input('Type the word you want to put: ')
         N = int(input('Row: '))
         M = int(input('Column: '))
         Orientation = input("Orientation ('H' or 'V'):" )
