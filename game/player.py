@@ -13,7 +13,7 @@ class Player:
         for i in tileArrayToExchange:
             self.game.bag_tiles.put([self.tiles[i]])
             del self.tiles[i]
-            self.tiles.insert(i, self.game.bag_tiles.take(1))
+            self.tiles.insert(i, self.game.bag_tiles.take(1)[0])
 
     def shuffle_tiles(self):
         random.shuffle(self.tiles)

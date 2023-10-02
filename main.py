@@ -45,19 +45,25 @@ while game_status == True:
     print ('')
     print ('Choose an option: ')
     print ('                    A- Exchange Tiles   B- Put word   C- Shuffle   D - Surrender')
-    option = input ()
-    if option.upper() == 'B':
-        word = input('Type the word you want to put: ')
+    option = input ().upper()
+    if option == 'A':
+        tiles = input('Type the positions of the tiles you want to exchange: ').split(',')
+        player = game.players[game.turn]
+        tilesToExchange = [int(x) - 1 for x in tiles]
+        player.exchange(tilesToExchange)
+        print(player.tiles)
+        
+    elif option == 'B':
+        word = input('Type the word you want to put: ').upper()
         N = int(input('Row: '))
         M = int(input('Column: '))
-        Orientation = input("Orientation ('H' or 'V'):" )
+        Orientation = input("Orientation ('H' or 'V'):" ).upper()
         print(game.validate_and_put_word(word,[N,M], Orientation))
 
-    elif option.upper() == 'C':
+    elif option == 'C':
         game.players[game.turn].shuffle_tiles()
-    elif option.upper() == 'D':
+    elif option == 'D':
         game_status = False
     else:
         game.next_turn()
     
-
