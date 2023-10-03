@@ -6,6 +6,7 @@ from game.models import Tile
 from game.tools import Tools
 from colorama import Fore, Back, Style
 from unidecode import unidecode
+import os 
 
 
 def separator():
@@ -52,18 +53,26 @@ while game_status == True:
         tilesToExchange = [int(x) - 1 for x in tiles]
         player.exchange(tilesToExchange)
         print(player.tiles)
+        game.turn += 1
+        os.system('clear')
         
     elif option == 'B':
         word = input('Type the word you want to put: ').upper()
         N = int(input('Row: '))
         M = int(input('Column: '))
         Orientation = input("Orientation ('H' or 'V'):" ).upper()
+        os.system('clear')
         print(game.validate_and_put_word(word,[N,M], Orientation))
 
     elif option == 'C':
         game.players[game.turn].shuffle_tiles()
+        os.system('clear')
+
     elif option == 'D':
         game_status = False
+    
     else:
         game.next_turn()
-    
+        os.system('clear')
+
+
