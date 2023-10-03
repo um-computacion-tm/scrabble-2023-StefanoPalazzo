@@ -110,5 +110,8 @@ class TestScrabbleGame(unittest.TestCase):
         result = game.validate_and_put_word('AVIÓN',[8,8],'V') # User Location starts at 1, instead of 0
         self.assertEqual(result, 'Word succesfully colocated.')
         
+    
+    
+
 if __name__ == '__main__':
     unittest.main()

@@ -3,6 +3,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# [0.2.9] - 2023-10-03
+
+### Added
+
+- Now Wildcards functions as any letter
+
+### Changed
+
+- Now the cosole is cleaned after every turn 
+- Game turn changes when the player exchanges their tiles
+
+
+# [0.2.8] - 2023-10-02
+
+### Added
+
+- Now the game detects lowercase Inputs
+- Now the option 'Exchange tiles' has its function
+
+### Fixed
+
+- Error that made the user take more tiles than the put in the board
+
 ## [0.2.7] - 2023-09-28
 
 ### Added

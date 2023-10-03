@@ -65,7 +65,7 @@ class ScrabbleGame:
                 N += 1
             
         self.board.put_words(wordToColocate, location, orientation)
-        playerTiles.extend(self.bag_tiles.take(len(word)))  # User takes tiles from the bag
+        playerTiles.extend(self.bag_tiles.take(7 - len(self.players[self.turn].tiles)))  # User takes tiles from the bag
         word_cells = self.board.cells_of_word_in_board(word, location , orientation)
         self.players[self.turn].score += Tools().calculate_word_value(word_cells)
         return ('Word succesfully colocated.')

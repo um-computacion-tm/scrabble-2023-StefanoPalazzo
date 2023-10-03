@@ -128,11 +128,26 @@ class TestBoard(unittest.TestCase):
     def test_validate_tiles_for_word_PlayerDoesNotHaveTiles(self):
         board1 = Board()
         Player1 = Player(ScrabbleGame(1))
+        Player1.tiles = []
         location = [5,5]                    # User location starts at 1 instead of 0
         orientation = 'V'
         word = 'CASA'
         result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
         self.assertEqual(result, False)
+
+    def test_validate_tiles_for_word_player_has_wildcard(self):
+        board1 = Board()
+        Player1 = Player(ScrabbleGame(1))
+        Player1.tiles = [Tile('L',1),
+                         Tile('E',1),
+                         Tile('Ñ',1),
+                         Tile('?',1),
+                         ]
+        location = [5,5]                    # User location starts at 1 instead of 0
+        orientation = 'V'
+        word = 'LEÑA'
+        result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
+        self.assertEqual(result, True)
     
     def test_first_word_passes_by_the_center(self):
         board1 = Board()

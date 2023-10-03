@@ -88,13 +88,20 @@ class Board:
         N = location[0] - 1 
         M = location[1] - 1
         playerTilesToVerify = []
+        wildcard = False
         for i in playerTiles:
-            playerTilesToVerify.append(i.letter)
+            playerTilesToVerify.append(i.letter)    # Creates an array of the letters of the tiles
+            if i.letter == '?':                     # Checks if the user has a wildcard
+                wildcard = True
         for i in word:
-            if i == self.grid[N][M].letter.letter:
+            if i == self.grid[N][M].letter.letter: 
                 pass
             elif i in playerTilesToVerify:
                 playerTilesToVerify.remove(i)
+            elif wildcard:
+                for tile in range(len(playerTiles)):
+                    if playerTiles[tile].letter == '?':
+                        playerTiles[tile].letter = i
             else:
                 return False
                    
@@ -105,7 +112,7 @@ class Board:
         return True
     
     def validate_word_is_connected(self,word, location, orientation):
-        word = unidecode(word)
+        word = unidecode(word) 
         N = location[0] - 1 
         M = location[1] - 1
         for i in range(len(word)):
