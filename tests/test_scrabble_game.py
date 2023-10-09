@@ -46,6 +46,18 @@ class TestScrabbleGame(unittest.TestCase):
         result = game.validate_and_put_word('MAREA',[8,8],'H')
         self.assertEqual(result, 'Error! User does not have required tiles')
 
+    def test_validate_and_put_word_error_it_is_not_a_new_word(self):
+        game = ScrabbleGame(1)
+        game.board.grid[7][7].letter = Tile('M',1)
+        game.board.grid[7][8].letter = Tile('A',1)
+        game.board.grid[7][9].letter = Tile('R',1)
+        game.board.grid[7][10].letter = Tile('E',1)
+        game.board.grid[7][11].letter = Tile('A',1)
+
+        result = game.validate_and_put_word('MAREA',[8,8],'H')
+        self.assertEqual(result, 'Error! User is not creating a new word.')
+
+
     def test_validate_and_put_word_doesnt_pass_by_the_center(self):
         game = ScrabbleGame(1)
         game.players[0].tiles.append(Tile('M',1))

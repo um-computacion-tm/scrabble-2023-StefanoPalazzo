@@ -88,6 +88,7 @@ class Board:
         N = location[0] - 1 
         M = location[1] - 1
         playerTilesToVerify = []
+        NewWord = False
         wildcard = False
         for i in playerTiles:
             playerTilesToVerify.append(i.letter)    # Creates an array of the letters of the tiles
@@ -98,18 +99,21 @@ class Board:
                 pass
             elif i in playerTilesToVerify:
                 playerTilesToVerify.remove(i)
+                NewWord = True
             elif wildcard:
                 for tile in range(len(playerTiles)):
                     if playerTiles[tile].letter == '?':
                         playerTiles[tile].letter = i
+                        NewWord = True
             else:
-                return False
+                return [False, True]    # Aclaration: True does not mean it is a New Word, is just to avoid the error message
                    
             if orientation == 'H':
                 M += 1
             elif orientation == 'V':
                 N += 1
-        return True
+
+        return [True, NewWord]
     
     def validate_word_is_connected(self,word, location, orientation):
         word = unidecode(word) 
@@ -158,11 +162,3 @@ class Board:
 
 
 
-
-# while 1 == 1:
-#     N = int(input ('N: '))
-#     M = int(input ('M: '))
-#     array = [N,M]
-#     orientation = input ('orientation: ')
-#     board1.put_words(word, array, orientation)
-#     board1.show_board()

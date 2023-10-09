@@ -106,7 +106,7 @@ class TestBoard(unittest.TestCase):
         Player1.tiles.append(Tile('A', 1))
         word = 'CASA'
         result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
-        self.assertEqual(result, True)
+        self.assertEqual(result, [True,True])
 
     def test_validate_tiles_for_word_PlayerHasSomeTiles_BoardHasTiles(self):
         board1 = Board()
@@ -123,17 +123,29 @@ class TestBoard(unittest.TestCase):
         Player1.tiles.append(Tile('A', 1))
         word = 'CASA'
         result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
-        self.assertEqual(result, True)
+        self.assertEqual(result, [True,True])
 
     def test_validate_tiles_for_word_PlayerDoesNotHaveTiles(self):
         board1 = Board()
         Player1 = Player(ScrabbleGame(1))
-        Player1.tiles = []
-        location = [5,5]                    # User location starts at 1 instead of 0
-        orientation = 'V'
+        location = [8,8]                    # User location starts at 1 instead of 0
+        orientation = 'H'
         word = 'CASA'
         result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
-        self.assertEqual(result, False)
+        self.assertEqual(result, [False,True])
+
+    def test_validate_player_is_creating_a_new_word_False(self):
+        board1 = Board()
+        board1.grid[7][7].letter = Tile('C', 1)
+        board1.grid[7][8].letter = Tile('A', 1) 
+        board1.grid[7][9].letter = Tile('S', 1)    
+        board1.grid[7][10].letter = Tile('A', 1)
+        Player1 = Player(ScrabbleGame(1))
+        location = [8,8]                    # User location starts at 1 instead of 0
+        orientation = 'H'
+        word = 'CASA'
+        result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
+        self.assertEqual(result, [True,False])
 
     def test_validate_tiles_for_word_player_has_wildcard(self):
         board1 = Board()
@@ -147,7 +159,7 @@ class TestBoard(unittest.TestCase):
         orientation = 'V'
         word = 'LEÑA'
         result = board1.validate_tiles_for_word(word, location, orientation, Player1.tiles)
-        self.assertEqual(result, True)
+        self.assertEqual(result, [True,True])
     
     def test_first_word_passes_by_the_center(self):
         board1 = Board()
