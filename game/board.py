@@ -120,11 +120,27 @@ class Board:
         N = location[0] - 1 
         M = location[1] - 1
         for i in range(len(word)):
+            if N < 0 or N >= len(self.grid) or M < 0 or M >= len(self.grid[0]):
+                    continue
+            
             if N == 7 and M == 7 and self.grid[7][7].letter.letter == ' ':  # Checks that the first word passes through the center
                 return True
             if self.grid[N][M].letter.letter != ' ': # Checks that the word is connected by at least one letter to another word
                 return True
-            if orientation == 'H':
+            
+            # Check if any of the surrounding positions are connected to another word
+            surrounding_positions = [
+                (N-1, M-1), (N-1, M), (N-1, M+1),
+                (N, M-1),             (N, M+1),
+                (N+1, M-1), (N+1, M), (N+1, M+1)
+            ]
+            for pos in surrounding_positions:
+                N, M = pos
+
+                if self.grid[N][M].letter.letter != ' ':
+                    return True
+                
+            if orientation == 'H': 
                 M += 1
             elif orientation == 'V':
                 N += 1
@@ -157,6 +173,8 @@ class Board:
             elif orientation == 'V':
                 N += 1
         return word_cells
+
+
 
 
 

@@ -77,7 +77,6 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_inside_board(word,location, orientation)
         assert word_is_valid == False
 
-
     def test_word_inside_board_vertical_false(self):
         board = Board()
         word = 'CASA'
@@ -163,7 +162,7 @@ class TestBoard(unittest.TestCase):
     
     def test_first_word_passes_by_the_center(self):
         board1 = Board()
-        location = [8,5]                    # User location starts at 1 instead of 0
+        location = [8,8]                    # User location starts at 1 instead of 0
         orientation = 'H'
         word = 'LATA'
         result = board1.validate_word_is_connected(word, location, orientation)
@@ -188,6 +187,19 @@ class TestBoard(unittest.TestCase):
         word = 'LATA'
         result = board1.validate_word_is_connected(word, location, orientation)
         self.assertTrue(result)
+
+    def test_word_is_connected_by_sourranding_letter(self):
+            board1 = Board()
+            board1.grid[7][7].letter.letter = 'C' 
+            board1.grid[7][8].letter.letter = 'A'
+            board1.grid[7][9].letter.letter = 'S'   
+            board1.grid[7][10].letter.letter = 'A'  
+
+            location = [8,12]                    # User location starts at 1 instead of 0
+            orientation = 'V'
+            word = 'SOPA'
+            result = board1.validate_word_is_connected(word, location, orientation)
+            self.assertTrue(result)
 
     def test_word_is_not_connected(self):
         board1 = Board()
