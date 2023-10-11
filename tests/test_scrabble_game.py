@@ -102,7 +102,7 @@ class TestScrabbleGame(unittest.TestCase):
         result = game.validate_and_put_word('VER',[7,9],'V') # User Location starts at 1, instead of 0
         self.assertEqual(result, 'Word succesfully colocated.')
 
-    def test_validate_and_put_word_without_accent_mark_error(self):
+    def test_validate_and_put_word_without_accent_mark(self):
         game = ScrabbleGame(1)
         game.players[0].tiles.append(Tile('A',1))
         game.players[0].tiles.append(Tile('V',1))
@@ -110,7 +110,7 @@ class TestScrabbleGame(unittest.TestCase):
         game.players[0].tiles.append(Tile('O',1))
         game.players[0].tiles.append(Tile('N',1))
         result = game.validate_and_put_word('AVION',[8,8],'V') # User Location starts at 1, instead of 0
-        self.assertEqual(result, 'Error! Word was not found in RAE dictionary')
+        self.assertEqual(result, 'Word succesfully colocated.')
 
     def test_validate_and_put_word_with_accent_mark_succesful(self):
         game = ScrabbleGame(1)

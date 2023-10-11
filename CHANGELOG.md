@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# [0.2.12] - 2023-10-11
+
+### Added
+
+- validate_word_in_dictionary_txt function to verify if a word exists in the downloaded dictionary
+
+### Changed
+
+- now the game verifies the word in a donwloaded dictionary along with the RAE API
+
 # [0.2.11] - 2023-10-10
 
 ### Changed

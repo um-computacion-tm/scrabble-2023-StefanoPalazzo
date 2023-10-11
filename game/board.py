@@ -41,7 +41,10 @@ class Board:
         for i in range(15):
             for j in range(15):
                 if self.grid[i][j].letter.letter != ' ':
-                    boardRow += '[' + self.grid[i][j].letter.letter + ' ]'
+                    if self.grid[i][j].letter.letter == 'LL' or self.grid[i][j].letter.letter == 'RR' or self.grid[i][j].letter.letter == 'CH':
+                        boardRow += '[' + self.grid[i][j].letter.letter + ']'
+                    else:
+                        boardRow += '[' + self.grid[i][j].letter.letter + ' ]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
                     boardRow += f'[{Fore.MAGENTA}{Style.BRIGHT}2W{Style.RESET_ALL}]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 3: 

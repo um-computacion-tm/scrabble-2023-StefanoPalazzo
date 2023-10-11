@@ -46,9 +46,13 @@ class ScrabbleGame:
         if not v4:
             return ('Error! Word enters in conflict with other words.')
 
-        v5 = Tools().validate_word_in_RAE(word)
+        v5 = Tools().validate_word_in_dictionary_txt(word)
+        
         if not v5:
-            return ('Error! Word was not found in RAE dictionary')
+            v6 = Tools().validate_word_in_RAE(word)
+            if not v6:
+                return ('Error! Word was not found in RAE dictionary')
+        
         
         wordToColocate = []
         N = location[0] - 1
