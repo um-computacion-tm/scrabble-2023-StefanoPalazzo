@@ -3,7 +3,7 @@ from game.player import Player
 from game.models import BagTiles, Tile
 from game.cell import Cell
 from game.tools import Tools
-
+from unidecode import unidecode
 
 
 
@@ -31,9 +31,11 @@ class ScrabbleGame:
             return ("Error! The word doesn't fit on the board. Please choose a valid location.")
         
         v2 = self.board.validate_tiles_for_word(word, location, orientation, playerTiles)
-        if not v2: 
+        if not v2[0] and v2[1]: 
             return ('Error! User does not have required tiles')
-
+        elif v2[0] and not v2[1]:
+            return ('Error! User is not creating a new word.')
+            
         v3 = self.board.validate_word_is_connected(word, location, orientation)
         if not v3 and self.board.grid[7][7].letter.letter == ' ':
             return ('Error! Word does not passes by the center. Try with [8][8]')
@@ -44,15 +46,19 @@ class ScrabbleGame:
         if not v4:
             return ('Error! Word enters in conflict with other words.')
 
-        v5 = Tools().validate_word_in_RAE(word)
+        v5 = Tools().validate_word_in_dictionary_txt(word)
+        
         if not v5:
-            return ('Error! Word was not found in RAE dictionary')
+            v6 = Tools().validate_word_in_RAE(word)
+            if not v6:
+                return ('Error! Word was not found in RAE dictionary')
+        
         
         wordToColocate = []
         N = location[0] - 1
         M = location[1] - 1 
         for i in word:
-            if self.board.grid[N][M].letter.letter != ' ':        # Checks if the cell is empty     
+            if unidecode(self.board.grid[N][M].letter.letter) != ' ':        # Checks if the cell is empty     
                     wordToColocate.append(self.board.grid[N][M].letter)  # Appends the tile in the board
             else:
                 for j in playerTiles: 

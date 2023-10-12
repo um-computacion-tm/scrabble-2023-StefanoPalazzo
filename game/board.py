@@ -41,7 +41,10 @@ class Board:
         for i in range(15):
             for j in range(15):
                 if self.grid[i][j].letter.letter != ' ':
-                    boardRow += '[' + self.grid[i][j].letter.letter + ' ]'
+                    if self.grid[i][j].letter.letter == 'LL' or self.grid[i][j].letter.letter == 'RR' or self.grid[i][j].letter.letter == 'CH':
+                        boardRow += '[' + self.grid[i][j].letter.letter + ']'
+                    else:
+                        boardRow += '[' + self.grid[i][j].letter.letter + ' ]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
                     boardRow += f'[{Fore.MAGENTA}{Style.BRIGHT}2W{Style.RESET_ALL}]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 3: 
@@ -88,6 +91,7 @@ class Board:
         N = location[0] - 1 
         M = location[1] - 1
         playerTilesToVerify = []
+        NewWord = False
         wildcard = False
         for i in playerTiles:
             playerTilesToVerify.append(i.letter)    # Creates an array of the letters of the tiles
@@ -98,29 +102,48 @@ class Board:
                 pass
             elif i in playerTilesToVerify:
                 playerTilesToVerify.remove(i)
+                NewWord = True
             elif wildcard:
                 for tile in range(len(playerTiles)):
                     if playerTiles[tile].letter == '?':
                         playerTiles[tile].letter = i
+                        NewWord = True
             else:
-                return False
+                return [False, True]    # Aclaration: True does not mean it is a New Word, is just to avoid the error message
                    
             if orientation == 'H':
                 M += 1
             elif orientation == 'V':
                 N += 1
-        return True
+
+        return [True, NewWord]
     
     def validate_word_is_connected(self,word, location, orientation):
         word = unidecode(word) 
         N = location[0] - 1 
         M = location[1] - 1
         for i in range(len(word)):
+            if N < 0 or N >= len(self.grid) or M < 0 or M >= len(self.grid[0]):
+                    continue
+            
             if N == 7 and M == 7 and self.grid[7][7].letter.letter == ' ':  # Checks that the first word passes through the center
                 return True
             if self.grid[N][M].letter.letter != ' ': # Checks that the word is connected by at least one letter to another word
                 return True
-            if orientation == 'H':
+            
+            # Check if any of the surrounding positions are connected to another word
+            surrounding_positions = [
+                (N-1, M-1), (N-1, M), (N-1, M+1),
+                (N, M-1),             (N, M+1),
+                (N+1, M-1), (N+1, M), (N+1, M+1)
+            ]
+            for pos in surrounding_positions:
+                N, M = pos
+
+                if self.grid[N][M].letter.letter != ' ':
+                    return True
+                
+            if orientation == 'H': 
                 M += 1
             elif orientation == 'V':
                 N += 1
@@ -159,10 +182,4 @@ class Board:
 
 
 
-# while 1 == 1:
-#     N = int(input ('N: '))
-#     M = int(input ('M: '))
-#     array = [N,M]
-#     orientation = input ('orientation: ')
-#     board1.put_words(word, array, orientation)
-#     board1.show_board()
+

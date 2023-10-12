@@ -8,6 +8,7 @@ from colorama import Fore, Back, Style
 from unidecode import unidecode
 import os 
 
+os.system('clear')
 
 def separator():
     print ('''______________________________________________________________________________________________________
@@ -40,7 +41,7 @@ numPlayers = int(input('Select the number of players: '))
 game = ScrabbleGame(numPlayers)
 game_status = True
     
-
+os.system('clear')
 while game_status == True:
     main_menu()
     print ('')

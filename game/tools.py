@@ -1,7 +1,8 @@
 from pyrae import dle
-import re
 from game.cell import Cell
 from game.models import Tile
+import os
+import re
 
 
 
@@ -47,6 +48,16 @@ class Tools:
         else:
             return True
 
-
-
+    def validate_word_in_dictionary_txt(self, word):
+        with open('dictionary.txt', 'r') as file:
+            dictionary = file.read().splitlines()
+        
+        wordToCheck = ''
+        for i in word:
+            wordToCheck += i.lower()
+            
+        if wordToCheck in dictionary:
+            return True
+        else:
+            return False
 
