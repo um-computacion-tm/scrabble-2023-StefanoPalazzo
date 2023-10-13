@@ -1,4 +1,4 @@
-from game.scrabble import ScrabbleGame
+from game.scrabble import ScrabbleGame, WordDoesntFitOnBoardException
 from game.player import Player
 from game.board import Board
 from game.cell import Cell
@@ -7,6 +7,9 @@ from game.tools import Tools
 from colorama import Fore, Back, Style
 from unidecode import unidecode
 import os 
+
+class TilesException(Exception):
+    pass
 
 os.system('clear')
 
@@ -37,7 +40,19 @@ welcomeText = f"         {Fore.RED}W{Fore.GREEN}E{Fore.YELLOW}L{Fore.BLUE}C{Fore
 print ('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 print(welcomeText)
 print ('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-numPlayers = int(input('Select the number of players: '))
+
+while True: 
+    try:
+        numPlayers = int(input('Select the number of players: '))
+        if numPlayers > 1 and numPlayers < 5:
+            break
+        else:
+            print ('Please select a maximum of 4 players.')
+            continue
+    except ValueError:
+        print ('Error! Please select a valid number of players.')
+
+
 game = ScrabbleGame(numPlayers)
 game_status = True
     
@@ -46,10 +61,24 @@ while game_status == True:
     main_menu()
     print ('')
     print ('Choose an option: ')
-    print ('                    A- Exchange Tiles   B- Put word   C- Shuffle   D - Surrender')
-    option = input ().upper()
+    print ('                    A- Exchange Tiles   B- Put word   C- Shuffle   D - Skip Turn   E - Surrender')
+    while True:
+        option = input('').upper()
+        if option == 'A' or option == 'B' or option == 'C' or option == 'D' or option == 'E' or option == '':
+            break
+        else:
+            print ('Error! Please, choose a valid option: ')
+            
     if option == 'A':
-        tiles = input('Type the positions of the tiles you want to exchange: ').split(',')
+        while True:
+            try:
+                tiles = input('Type the positions of the tiles you want to exchange: ').split(',')
+                tiles = [int(tile) for tile in tiles]
+                if not all(0 < tile <= 7 for tile in tiles):
+                    raise ValueError('Invalid tile position')
+                break
+            except ValueError as e:
+                 print('Error! Please enter valid tile positions between 1 and 7.')
         player = game.players[game.turn]
         tilesToExchange = [int(x) - 1 for x in tiles]
         player.exchange(tilesToExchange)
@@ -58,20 +87,55 @@ while game_status == True:
         os.system('clear')
         
     elif option == 'B':
-        word = input('Type the word you want to put: ').upper()
-        N = int(input('Row: '))
-        M = int(input('Column: '))
-        Orientation = input("Orientation ('H' or 'V'):" ).upper()
+        while True:
+            word = input('Type the word you want to put: ').upper()
+            if not word.isalpha():
+                print('Error! Please write a valid word.')
+            else:
+                break
+        while True:
+            try:
+                N = int(input('Row: '))
+                M = int(input('Column: '))
+                break
+            except:
+                print('Error! please type a valid number.')
+        while True:
+            Orientation = input("Orientation ('H' or 'V'):" ).upper()
+            if Orientation == 'H' or Orientation == 'V':
+                break
+            else:
+                print('Error! Please type a valid orientation.')
         os.system('clear')
-        print(game.validate_and_put_word(word,[N,M], Orientation))
+        try:
+            print(game.validate_and_put_word(word,[N,M], Orientation))
+        except WordDoesntFitOnBoardException as e:
+            print(e)
 
     elif option == 'C':
         game.players[game.turn].shuffle_tiles()
         os.system('clear')
 
-    elif option == 'D':
+    elif option == 'D' or option == '':
+        game.next_turn()
+        os.system('clear')
+
+    elif option == 'E':
+        maxValue = 0
+        winner = None
+        os.system('clear')
+        for i in game.players:
+            print('Player', game.players.index(i)+1, 'score:', i.score, 'points')
+            if maxValue < i.score:
+                winner = game.players.index(i) + 1
+                maxValue = i.score
+        
+        
+        separator()
+        print ('The winner is player', winner, 'with', maxValue, 'points!')
+        separator()
         game_status = False
-    
+
     else:
         game.next_turn()
         os.system('clear')

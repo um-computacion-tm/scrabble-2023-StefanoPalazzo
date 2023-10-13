@@ -41,9 +41,6 @@ class Board:
         for i in range(15):
             for j in range(15):
                 if self.grid[i][j].letter.letter != ' ':
-                    if self.grid[i][j].letter.letter == 'LL' or self.grid[i][j].letter.letter == 'RR' or self.grid[i][j].letter.letter == 'CH':
-                        boardRow += '[' + self.grid[i][j].letter.letter + ']'
-                    else:
                         boardRow += '[' + self.grid[i][j].letter.letter + ' ]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
                     boardRow += f'[{Fore.MAGENTA}{Style.BRIGHT}2W{Style.RESET_ALL}]'
@@ -133,14 +130,14 @@ class Board:
             
             # Check if any of the surrounding positions are connected to another word
             surrounding_positions = [
-                (N-1, M-1), (N-1, M), (N-1, M+1),
+                            (N-1, M),
                 (N, M-1),             (N, M+1),
-                (N+1, M-1), (N+1, M), (N+1, M+1)
+                            (N+1, M), 
             ]
             for pos in surrounding_positions:
-                N, M = pos
+                J, K = pos
 
-                if self.grid[N][M].letter.letter != ' ':
+                if self.grid[J][K].letter.letter != ' ':
                     return True
                 
             if orientation == 'H': 

@@ -127,6 +127,7 @@ class TestBoard(unittest.TestCase):
     def test_validate_tiles_for_word_PlayerDoesNotHaveTiles(self):
         board1 = Board()
         Player1 = Player(ScrabbleGame(1))
+        Player1.tiles = []
         location = [8,8]                    # User location starts at 1 instead of 0
         orientation = 'H'
         word = 'CASA'

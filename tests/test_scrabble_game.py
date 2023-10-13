@@ -1,6 +1,14 @@
 import unittest
-from game.scrabble import ScrabbleGame
+from game.scrabble import (ScrabbleGame, 
+                           WordDoesntFitOnBoardException, 
+                           UserDoesntHaveTilesException, 
+                           WordIsNotNewException, 
+                           WordIsNotInDictionaryException, 
+                           WordIsNotConnectedException, 
+                           WordEntersInConflictWithOtherWordsException, 
+                           wordDoesntPassesByTheCenterException,)
 from game.models import Tile
+
 
 
 class TestScrabbleGame(unittest.TestCase):
@@ -38,13 +46,14 @@ class TestScrabbleGame(unittest.TestCase):
         game.players[0].tiles.append(Tile('M',1))
         game.players[0].tiles.append(Tile('A',1))
         game.players[0].tiles.append(Tile('R',1))
-        result = game.validate_and_put_word('MAR',[15,15],'H')
-        self.assertEqual(result, "Error! The word doesn't fit on the board. Please choose a valid location.")
+        with self.assertRaises(WordDoesntFitOnBoardException):
+            game.validate_and_put_word('MAR',[15,15],'H')
 
     def test_validate_and_put_word_error_doesnt_have_enough_tiles(self):
         game = ScrabbleGame(1)
-        result = game.validate_and_put_word('MAREA',[8,8],'H')
-        self.assertEqual(result, 'Error! User does not have required tiles')
+        game.players[0].tiles = []
+        with self.assertRaises(UserDoesntHaveTilesException):
+            game.validate_and_put_word('MAREA',[8,8],'H')
 
     def test_validate_and_put_word_error_it_is_not_a_new_word(self):
         game = ScrabbleGame(1)
@@ -53,27 +62,25 @@ class TestScrabbleGame(unittest.TestCase):
         game.board.grid[7][9].letter = Tile('R',1)
         game.board.grid[7][10].letter = Tile('E',1)
         game.board.grid[7][11].letter = Tile('A',1)
-
-        result = game.validate_and_put_word('MAREA',[8,8],'H')
-        self.assertEqual(result, 'Error! User is not creating a new word.')
-
+        with self.assertRaises(WordIsNotNewException):
+            game.validate_and_put_word('MAREA',[8,8],'H')
 
     def test_validate_and_put_word_doesnt_pass_by_the_center(self):
         game = ScrabbleGame(1)
         game.players[0].tiles.append(Tile('M',1))
         game.players[0].tiles.append(Tile('A',1))
         game.players[0].tiles.append(Tile('R',1))
-        result = game.validate_and_put_word('MAR',[10,10],'H')
-        self.assertEqual(result, 'Error! Word does not passes by the center. Try with [8][8]')
-
+        with self.assertRaises(wordDoesntPassesByTheCenterException):
+            game.validate_and_put_word('MAR',[10,10],'H')
+        
     def test_validate_and_put_word_is_not_connected(self):
         game = ScrabbleGame(1)
         game.board.put_words([Tile('T',1),Tile('E',1)], [8,8], 'H') # This puts 'TE' in the center
         game.players[0].tiles.append(Tile('S',1))
         game.players[0].tiles.append(Tile('O',1))
         game.players[0].tiles.append(Tile('L',1))
-        result = game.validate_and_put_word('SOL',[2,2],'H')
-        self.assertEqual(result, 'Error! Word is not connected to others')
+        with self.assertRaises(WordIsNotConnectedException):
+            game.validate_and_put_word('SOL',[2,2],'H')
 
     def test_validate_and_put_word_conflicts_with_another_word(self):
         game = ScrabbleGame(1)
@@ -81,16 +88,16 @@ class TestScrabbleGame(unittest.TestCase):
         game.players[0].tiles.append(Tile('M',1))
         game.players[0].tiles.append(Tile('A',1))
         game.players[0].tiles.append(Tile('R',1))
-        result = game.validate_and_put_word('MAR',[7,9],'V') # User Location starts at 1, instead of 0
-        self.assertEqual(result, 'Error! Word enters in conflict with other words.')
+        with self.assertRaises(WordEntersInConflictWithOtherWordsException):
+            game.validate_and_put_word('MAR',[7,9],'V') # User Location starts at 1, instead of 0
 
     def test_validate_and_put_word_is_not_in_RAE(self):
         game = ScrabbleGame(1)
         game.players[0].tiles.append(Tile('R',1))
         game.players[0].tiles.append(Tile('E',1))
         game.players[0].tiles.append(Tile('L',1))
-        result = game.validate_and_put_word('REL',[8,8],'V') # User Location starts at 1, instead of 0
-        self.assertEqual(result, 'Error! Word was not found in RAE dictionary')
+        with self.assertRaises(WordIsNotInDictionaryException):
+            game.validate_and_put_word('REL',[8,8],'V') # User Location starts at 1, instead of 0
 
     def test_validate_and_put_word_succesful(self):
         game = ScrabbleGame(1)
