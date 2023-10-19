@@ -161,6 +161,55 @@ class Board:
                 N += 1
         return True
     
+    def validate_word_creates_valid_words_in_each_cell(self, word, location, orientation):
+        N = location[0] - 1
+        M = location[1] - 1
+        result = True
+        for i in word:
+            if orientation == 'H':
+                newWord = ''
+                letter_added_to_new_word = False
+                R = N
+                C = M
+                while self.grid[R-1][C].letter.letter != ' ':    # Checks if the cell on top has a letter and continues until it finds an emptu cell
+                    R -= 1                                         
+                newWord += self.grid[R][C].letter.letter       # Adds the first letter of the word
+                while self.grid[R+1][C].letter.letter != ' ' or not letter_added_to_new_word:  # Checks if the cell on bottom has a letter and continues until it finds an empty cell
+                    if self.grid[R+1][C].letter.letter == ' ': # If it finds a blank space for the first time it makes 1 exception to add the letter of the word, this is to avoid adding the letter of the word twice
+                        newWord += i
+                        letter_added_to_new_word = True
+                        R += 1
+                    else:                                            # If it finds a letter it adds it to the new word
+                        newWord += self.grid[R+1][C].letter.letter
+                        R += 1       
+                M += 1
+                result = result and Tools().validate_word_in_dictionary_txt(newWord)  # If the word is in the dictionary this will remain True
+
+            if orientation == 'V':
+                newWord = ''
+                letter_added_to_new_word = False
+                R = N
+                C = M
+                while self.grid[R][C-1].letter.letter != ' ':    # Checks if the cell on top has a letter and continues until it finds an emptu cell
+                    C -= 1                                         
+                newWord += self.grid[R][C].letter.letter       # Adds the first letter of the word
+                while self.grid[R][C+1].letter.letter != ' ' or not letter_added_to_new_word:  # Checks if the cell on bottom has a letter and continues until it finds an empty cell
+                    if self.grid[R][C+1].letter.letter == ' ': # If it finds a blank space for the first time it makes 1 exception to add the letter of the word, this is to avoid adding the letter of the word twice
+                        newWord += i
+                        letter_added_to_new_word = True
+                        C += 1
+                    else:                                      # If it finds a letter it adds it to the new word
+                        newWord += self.grid[R][C+1].letter.letter
+                        C += 1       
+                N += 1
+                result = result and Tools().validate_word_in_dictionary_txt(newWord)    # If the word is in the dictionary this will remain True
+
+        return result
+               
+        
+
+    
+
     def cells_of_word_in_board(self, word, location, orientation):
         N = location[0] - 1 
         M = location[1] - 1
@@ -178,5 +227,5 @@ class Board:
 
 
 
-
+# board1.show_board()
 

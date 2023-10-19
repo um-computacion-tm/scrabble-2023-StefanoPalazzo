@@ -3,8 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.15] - 2023-10-19
 
-## [0.2.13] - 2023-10-12
+### Added
+
+- Function to verify if each letter of the word creates new words with their side letters in the board
+
+## [0.2.14] - 2023-10-13
 
 ### Added
 
