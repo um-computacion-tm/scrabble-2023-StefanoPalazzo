@@ -3,6 +3,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.0] - 2023-10-20
+
+### Added
+
+- validate_word_creates_new_words_in_each_cell function implemented in the game
+- New words created from the letters of the placed word now sum points to the player
+
+### Fixed
+
+- Now exceptions work as expected, they don't stop the program anymore
+
+### Changed
+
+- 'Surrender' option is now 'End Game'
+- 'LL', 'CH', 'RR' tiles were removed from the game
+
+
 ## [0.2.15] - 2023-10-19
 
 ### Added

@@ -15,23 +15,23 @@ class TestPlayer(unittest.TestCase):
         gameTest = ScrabbleGame(1)
         bag = gameTest.bag_tiles.tiles
         player_2 = gameTest.players[0]
-        self.assertEqual(len(bag),93)
+        self.assertEqual(len(bag),90)
         TilesZero = bag.copy()
         player_2.exchange([0])
         self.assertNotEqual(TilesZero,player_2.tiles)
         self.assertEqual(len(TilesZero),len(bag))
-        self.assertEqual(len(bag),93)
+        self.assertEqual(len(bag),90)
 
     def test_exchange_3_tiles(self):
         gameTest = ScrabbleGame(1)
         bag = gameTest.bag_tiles.tiles
         player_2 = gameTest.players[0]
-        self.assertEqual(len(bag),93)
+        self.assertEqual(len(bag),90)
         TilesZero = bag.copy()
         player_2.exchange([0,4,6])
         self.assertNotEquals(TilesZero,player_2.tiles)
         self.assertEqual(len(TilesZero),len(bag))
-        self.assertEqual(len(bag),93)
+        self.assertEqual(len(bag),90)
 
     def test_initial_score(self):
         gameTest = ScrabbleGame(2)

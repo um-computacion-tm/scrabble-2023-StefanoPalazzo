@@ -26,6 +26,9 @@ class WordIsNotNewException(Exception):
 class WordIsNotInDictionaryException(Exception):
     pass
 
+class WordCreatesNonValidWordsWithTheExistingOnes(Exception):
+    pass
+
 
 class ScrabbleGame:
     def __init__(self, players_count):
@@ -42,9 +45,6 @@ class ScrabbleGame:
             self.turn = 0
         
     def validate_and_put_word (self,word, location, orientation):
-        # palabra = []
-        # for i in word:
-        #     palabra.append(i)
         playerTiles = self.players[self.turn].tiles
         v1 = self.board.validate_word_inside_board(word,location, orientation)
         if not v1:
@@ -73,6 +73,10 @@ class ScrabbleGame:
             if not v6:
                 raise WordIsNotInDictionaryException ('Error! Word was not found in RAE dictionary')
         
+        v6 = self.board.validate_word_creates_valid_words_in_each_cell(word, location, orientation)
+        
+        if not v6[0]:
+            raise WordCreatesNonValidWordsWithTheExistingOnes('Error! Any of the words created by your word is not valid.')
         
         wordToColocate = []
         N = location[0] - 1
@@ -92,8 +96,17 @@ class ScrabbleGame:
             
         self.board.put_words(wordToColocate, location, orientation)
         playerTiles.extend(self.bag_tiles.take(7 - len(self.players[self.turn].tiles)))  # User takes tiles from the bag
+
+        # Calculates the score of the word and adds it to the player's score
         word_cells = self.board.cells_of_word_in_board(word, location , orientation)
         self.players[self.turn].score += Tools().calculate_word_value(word_cells)
+
+        # Calculate the score of the new words created from each letter of the word
+        for i in v6[1]:
+            NewWordCells = self.board.cells_of_word_in_board(i[0], i[1], i[2])
+            self.players[self.turn].score += Tools().calculate_word_value(NewWordCells)
+
+
         return ('Word succesfully colocated.')
 
     

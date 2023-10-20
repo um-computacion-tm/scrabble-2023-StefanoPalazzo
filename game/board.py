@@ -165,14 +165,21 @@ class Board:
         N = location[0] - 1
         M = location[1] - 1
         result = True
+        NewWordsAndPositionsArray = []
+        if self.grid[7][7].letter.letter == ' ':
+            return (True, [])
         for i in word:
             if orientation == 'H':
-                newWord = ''
+                newWord = '' 
+                wordOrientation = 'V'
                 letter_added_to_new_word = False
                 R = N
                 C = M
+                if self.grid[R-1][C].letter.letter == ' ' and self.grid[R+1][C].letter.letter == ' ':
+                    continue
                 while self.grid[R-1][C].letter.letter != ' ':    # Checks if the cell on top has a letter and continues until it finds an emptu cell
-                    R -= 1                                         
+                    R -= 1              
+                startPosition = [R+1,C+1]                           # Saves the position of the first letter of the word                           
                 newWord += self.grid[R][C].letter.letter       # Adds the first letter of the word
                 while self.grid[R+1][C].letter.letter != ' ' or not letter_added_to_new_word:  # Checks if the cell on bottom has a letter and continues until it finds an empty cell
                     if self.grid[R+1][C].letter.letter == ' ': # If it finds a blank space for the first time it makes 1 exception to add the letter of the word, this is to avoid adding the letter of the word twice
@@ -183,15 +190,20 @@ class Board:
                         newWord += self.grid[R+1][C].letter.letter
                         R += 1       
                 M += 1
+                NewWordsAndPositionsArray.append([newWord, startPosition, wordOrientation])
                 result = result and Tools().validate_word_in_dictionary_txt(newWord)  # If the word is in the dictionary this will remain True
 
             if orientation == 'V':
                 newWord = ''
+                wordOrientation = 'H'  
                 letter_added_to_new_word = False
                 R = N
                 C = M
+                if self.grid[R][C-1].letter.letter == ' ' and self.grid[R][C+1].letter.letter == ' ':
+                    continue
                 while self.grid[R][C-1].letter.letter != ' ':    # Checks if the cell on top has a letter and continues until it finds an emptu cell
-                    C -= 1                                         
+                    C -= 1           
+                startPosition = [R+1,C+1]                     
                 newWord += self.grid[R][C].letter.letter       # Adds the first letter of the word
                 while self.grid[R][C+1].letter.letter != ' ' or not letter_added_to_new_word:  # Checks if the cell on bottom has a letter and continues until it finds an empty cell
                     if self.grid[R][C+1].letter.letter == ' ': # If it finds a blank space for the first time it makes 1 exception to add the letter of the word, this is to avoid adding the letter of the word twice
@@ -202,12 +214,10 @@ class Board:
                         newWord += self.grid[R][C+1].letter.letter
                         C += 1       
                 N += 1
+                NewWordsAndPositionsArray.append([newWord, startPosition, wordOrientation])
                 result = result and Tools().validate_word_in_dictionary_txt(newWord)    # If the word is in the dictionary this will remain True
 
-        return result
-               
-        
-
+        return (result, NewWordsAndPositionsArray)
     
 
     def cells_of_word_in_board(self, word, location, orientation):
@@ -225,7 +235,20 @@ class Board:
 
 
 
-
-
+# board1 = Board()
+# # Word Casa in Horizontal
+# board1.grid[7][7].add_letter(Tile('C', 1))
+# board1.grid[7][8].add_letter(Tile('A', 1))
+# board1.grid[7][9].add_letter(Tile('S', 1))
+# board1.grid[7][10].add_letter(Tile('A', 1))
+# # This creates the word 'C MA' (with the previus S) in vertical, then it will create 'CAMA' in vertical with the new word
+# board1.grid[9][7].add_letter(Tile('M', 1))
+# board1.grid[10][7].add_letter(Tile('A', 1))
+# # This creates the word 'CA' (with the previus A) in vertical, then it will create 'CAE' in vertical with the new word
+# board1.grid[6][8].add_letter(Tile('C', 1))
+# # This creates the word 'MES' (with the previus S) in vertical, then it will create 'MESA' in vertical with the new word
+# board1.grid[5][9].add_letter(Tile('M', 1))
+# board1.grid[6][9].add_letter(Tile('E', 1))
+# result = (board1.validate_word_creates_valid_words_in_each_cell('AEA', [9,8], 'H'))  # We are suppossing that 'AEA' is a valid word
+# print (result[1])
 # board1.show_board()
-

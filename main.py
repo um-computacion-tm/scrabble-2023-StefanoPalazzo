@@ -1,4 +1,12 @@
-from game.scrabble import ScrabbleGame, WordDoesntFitOnBoardException
+from game.scrabble import (ScrabbleGame, 
+                           WordDoesntFitOnBoardException,
+                           UserDoesntHaveTilesException, 
+                           WordEntersInConflictWithOtherWordsException,
+                           WordIsNotNewException,
+                           WordIsNotConnectedException,
+                           WordIsNotInDictionaryException,
+                           wordDoesntPassesByTheCenterException,
+                           WordCreatesNonValidWordsWithTheExistingOnes)
 from game.player import Player
 from game.board import Board
 from game.cell import Cell
@@ -47,7 +55,7 @@ while True:
         if numPlayers > 1 and numPlayers < 5:
             break
         else:
-            print ('Please select a maximum of 4 players.')
+            print ('Please select a minimum of 2 players and maximum of 4 players.')
             continue
     except ValueError:
         print ('Error! Please select a valid number of players.')
@@ -55,13 +63,15 @@ while True:
 
 game = ScrabbleGame(numPlayers)
 game_status = True
+
+game.players[0].tiles = [Tile('D', 1), Tile('A', 1), Tile('D', 1), Tile('O', 1), Tile('S', 1), Tile('O', 1), Tile('L', 1)]
     
 os.system('clear')
 while game_status == True:
     main_menu()
     print ('')
     print ('Choose an option: ')
-    print ('                    A- Exchange Tiles   B- Put word   C- Shuffle   D - Skip Turn   E - Surrender')
+    print ('                    A- Exchange Tiles   B- Put word   C- Shuffle   D - Skip Turn   E - End Game')
     while True:
         option = input('').upper()
         if option == 'A' or option == 'B' or option == 'C' or option == 'D' or option == 'E' or option == '':
@@ -108,8 +118,22 @@ while game_status == True:
                 print('Error! Please type a valid orientation.')
         os.system('clear')
         try:
-            print(game.validate_and_put_word(word,[N,M], Orientation))
+            game.validate_and_put_word(word,[N,M], Orientation)
+        except UserDoesntHaveTilesException as e:
+            print(e)
+        except WordIsNotNewException as e:
+            print(e)
         except WordDoesntFitOnBoardException as e:
+            print(e)
+        except WordIsNotConnectedException as e:
+            print(e)
+        except WordEntersInConflictWithOtherWordsException as e:
+            print(e)
+        except wordDoesntPassesByTheCenterException as e:
+            print(e)
+        except WordIsNotInDictionaryException as e:
+            print(e)
+        except WordCreatesNonValidWordsWithTheExistingOnes as e:
             print(e)
 
     elif option == 'C':
@@ -132,7 +156,7 @@ while game_status == True:
         
         
         separator()
-        print ('The winner is player', winner, 'with', maxValue, 'points!')
+        print ('                                The winner is player', winner, 'with', maxValue, 'points!')
         separator()
         game_status = False
 

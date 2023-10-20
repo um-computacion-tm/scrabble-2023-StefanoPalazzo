@@ -260,7 +260,8 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(cells, [board1.grid[7][7],board1.grid[7][8],board1.grid[7][9],board1.grid[7][10]])
 
     def test_validate_word_creates_valid_words_in_each_cell_Horizontal_TRUE(self):
-        board1 = Board()
+        game = ScrabbleGame(2)
+        board1 = game.board
         # Word Casa in Horizontal
         board1.grid[7][7].add_letter(Tile('C', 1))
         board1.grid[7][8].add_letter(Tile('A', 1))
@@ -278,7 +279,7 @@ class TestBoard(unittest.TestCase):
         board1.grid[5][9].add_letter(Tile('M', 1))
         board1.grid[6][9].add_letter(Tile('E', 1))
         result = (board1.validate_word_creates_valid_words_in_each_cell('AEA', [9,8], 'H'))  # We are suppossing that 'AEA' is a valid word
-        self.assertTrue(result)
+        self.assertTrue(result[0])
 
     def test_validate_word_creates_valid_words_in_each_cell_Horizontal_FALSE(self):
         board1 = Board()
@@ -299,7 +300,7 @@ class TestBoard(unittest.TestCase):
         board1.grid[5][9].add_letter(Tile('M', 1))
         board1.grid[6][9].add_letter(Tile('E', 1))
         result = (board1.validate_word_creates_valid_words_in_each_cell('KKK', [9,8], 'H'))  # We are suppossing that 'AEA' is a valid word
-        self.assertFalse(result)
+        self.assertFalse(result[0])
 
     def test_validate_word_creates_valid_words_in_each_cell_vertical_TRUE(self):
         board1 = Board()
@@ -321,7 +322,7 @@ class TestBoard(unittest.TestCase):
         board1.grid[9][6].add_letter(Tile('E', 1))
 
         result = (board1.validate_word_creates_valid_words_in_each_cell('AEA', [8,9], 'V'))  # We are suppossing that 'AEA' is a valid word
-        self.assertTrue(result)
+        self.assertTrue(result[0])
 
 if __name__ == '__main__':
     unittest.main()
