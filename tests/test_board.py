@@ -127,6 +127,7 @@ class TestBoard(unittest.TestCase):
     def test_validate_tiles_for_word_PlayerDoesNotHaveTiles(self):
         board1 = Board()
         Player1 = Player(ScrabbleGame(1))
+        Player1.tiles = []
         location = [8,8]                    # User location starts at 1 instead of 0
         orientation = 'H'
         word = 'CASA'
@@ -257,6 +258,71 @@ class TestBoard(unittest.TestCase):
         board1.grid[7][10].letter = Tile('A', 1)
         cells = board1.cells_of_word_in_board('CASA', [8,8], 'H')
         self.assertEqual(cells, [board1.grid[7][7],board1.grid[7][8],board1.grid[7][9],board1.grid[7][10]])
+
+    def test_validate_word_creates_valid_words_in_each_cell_Horizontal_TRUE(self):
+        game = ScrabbleGame(2)
+        board1 = game.board
+        # Word Casa in Horizontal
+        board1.grid[7][7].add_letter(Tile('C', 1))
+        board1.grid[7][8].add_letter(Tile('A', 1))
+        board1.grid[7][9].add_letter(Tile('S', 1))
+        board1.grid[7][10].add_letter(Tile('A', 1))
+
+        # This creates the word 'C MA' (with the previus S) in vertical, then it will create 'CAMA' in vertical with the new word
+        board1.grid[9][7].add_letter(Tile('M', 1))
+        board1.grid[10][7].add_letter(Tile('A', 1))
+
+        # This creates the word 'CA' (with the previus A) in vertical, then it will create 'CAE' in vertical with the new word
+        board1.grid[6][8].add_letter(Tile('C', 1))
+
+        # This creates the word 'MES' (with the previus S) in vertical, then it will create 'MESA' in vertical with the new word
+        board1.grid[5][9].add_letter(Tile('M', 1))
+        board1.grid[6][9].add_letter(Tile('E', 1))
+        result = (board1.validate_word_creates_valid_words_in_each_cell('AEA', [9,8], 'H'))  # We are suppossing that 'AEA' is a valid word
+        self.assertTrue(result[0])
+
+    def test_validate_word_creates_valid_words_in_each_cell_Horizontal_FALSE(self):
+        board1 = Board()
+        # Word Casa in Horizontal
+        board1.grid[7][7].add_letter(Tile('C', 1))
+        board1.grid[7][8].add_letter(Tile('A', 1))
+        board1.grid[7][9].add_letter(Tile('S', 1))
+        board1.grid[7][10].add_letter(Tile('A', 1))
+
+        # This creates the word 'C MA' (with the previus S) in vertical, then it will create 'CAMA' in vertical with the new word
+        board1.grid[9][7].add_letter(Tile('M', 1))
+        board1.grid[10][7].add_letter(Tile('A', 1))
+
+        # This creates the word 'CA' (with the previus A) in vertical, then it will create 'CAE' in vertical with the new word
+        board1.grid[6][8].add_letter(Tile('C', 1))
+
+        # This creates the word 'MES' (with the previus S) in vertical, then it will create 'MESA' in vertical with the new word
+        board1.grid[5][9].add_letter(Tile('M', 1))
+        board1.grid[6][9].add_letter(Tile('E', 1))
+        result = (board1.validate_word_creates_valid_words_in_each_cell('KKK', [9,8], 'H'))  # We are suppossing that 'AEA' is a valid word
+        self.assertFalse(result[0])
+
+    def test_validate_word_creates_valid_words_in_each_cell_vertical_TRUE(self):
+        board1 = Board()
+        # Word Casa in Horizontal
+        board1.grid[7][7].add_letter(Tile('C', 1))
+        board1.grid[8][7].add_letter(Tile('A', 1))
+        board1.grid[9][7].add_letter(Tile('S', 1))
+        board1.grid[10][7].add_letter(Tile('A', 1))
+
+        # This creates the word 'C MA' (with the previus S) in horizontal, then it will create 'CAMA' in horizontal with the new word
+        board1.grid[7][9].add_letter(Tile('M', 1))
+        board1.grid[7][10].add_letter(Tile('A', 1))
+
+        # This creates the word 'CA' (with the previus A) in horizontal, then it will create 'CAE' in horizontal with the new word
+        board1.grid[8][6].add_letter(Tile('C', 1))
+
+        # This creates the word 'MES' (with the previus S) in horizontal, then it will create 'CASA' in hotizontal with the new word
+        board1.grid[9][5].add_letter(Tile('M', 1))
+        board1.grid[9][6].add_letter(Tile('E', 1))
+
+        result = (board1.validate_word_creates_valid_words_in_each_cell('AEA', [8,9], 'V'))  # We are suppossing that 'AEA' is a valid word
+        self.assertTrue(result[0])
 
 if __name__ == '__main__':
     unittest.main()

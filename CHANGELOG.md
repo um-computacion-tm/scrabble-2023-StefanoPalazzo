@@ -3,7 +3,48 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-# [0.2.12] - 2023-10-11
+## [0.3.0] - 2023-10-20
+
+### Added
+
+- validate_word_creates_new_words_in_each_cell function implemented in the game
+- New words created from the letters of the placed word now sum points to the player
+
+### Fixed
+
+- Now exceptions work as expected, they don't stop the program anymore
+
+### Changed
+
+- 'Surrender' option is now 'End Game'
+- 'LL', 'CH', 'RR' tiles were removed from the game
+
+
+## [0.2.15] - 2023-10-19
+
+### Added
+
+- Function to verify if each letter of the word creates new words with their side letters in the board
+
+## [0.2.14] - 2023-10-13
+
+### Added
+
+- 'Skip turn' option added
+- ScoreBoard to show the score of each player and the winner at the end of the match
+- Exception to prevent the player from creating a game with less than 1 player or more than 4 players
+- Exception to prevent the user from putting invalid values while exchanging tiles
+- Exception to prevent the user from putting invalid values while putting a word in the board
+
+### Changed
+
+- validate_and_put_word uses exceptions instead of using 'return' 
+
+### Fixed
+
+- Error that let the user put a word in the board if it has a letter in any corner around any letter of the word
+
+## [0.2.13] - 2023-10-12
 
 ### Added
 
@@ -13,20 +54,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - now the game verifies the word in a donwloaded dictionary along with the RAE API
 
-# [0.2.11] - 2023-10-10
+## [0.2.11] - 2023-10-10
 
 ### Changed
 
 - Now you can place words that "touch" at least one existing letter in the board, instead of only being able to cross them
 
 
-# [0.2.10] - 2023-10-09
+## [0.2.10] - 2023-10-09
 
 ### Fixed
 
 - Error that let the user use an existing word in the board as a new one
 
-# [0.2.9] - 2023-10-03
+## [0.2.9] - 2023-10-03
 
 ### Added
 
@@ -38,7 +79,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Game turn changes when the player exchanges their tiles
 
 
-# [0.2.8] - 2023-10-02
+## [0.2.8] - 2023-10-02
 
 ### Added
 

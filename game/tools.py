@@ -51,7 +51,6 @@ class Tools:
     def validate_word_in_dictionary_txt(self, word):
         with open('dictionary.txt', 'r') as file:
             dictionary = file.read().splitlines()
-        
         wordToCheck = ''
         for i in word:
             wordToCheck += i.lower()
