@@ -8,8 +8,9 @@ from game.scrabble import (ScrabbleGame,
                            WordEntersInConflictWithOtherWordsException, 
                            wordDoesntPassesByTheCenterException,)
 from game.models import Tile
-
-
+from unittest.mock import patch, MagicMock
+from io import StringIO
+import re
 
 class TestScrabbleGame(unittest.TestCase):
     def test_init(self):
@@ -129,7 +130,25 @@ class TestScrabbleGame(unittest.TestCase):
         result = game.validate_and_put_word('AVIÓN',[8,8],'V') # User Location starts at 1, instead of 0
         self.assertEqual(result, 'Word succesfully colocated.')
         
-    
+
+class TestScrabble_Main(unittest.TestCase):
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_main_menu(self, mock_stdout):
+        game = ScrabbleGame(2)
+        game.turn = 0
+        game.players[0].score = 10
+        game.bag_tiles.tiles = ['A', 'B', 'C']
+        game.main_menu()
+        console_output = mock_stdout.getvalue()
+        expected_output = '''Tiles in Bag: 3                           Player 1 turn                         Player's score: 10''' 
+        self.maxDiff = None
+        #   Elimina los caracteres de escape ANSI utilizando una expresión regular 
+        console_output_cleaned = re.sub(r'\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]', '', console_output)
+        expected_output_cleaned = re.sub(r'\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]', '', expected_output)
+
+        # Compara la salida real con la salida esperada
+        self.assertTrue(expected_output_cleaned in console_output_cleaned)
     
 
 if __name__ == '__main__':

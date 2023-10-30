@@ -1,19 +1,20 @@
 import unittest
+from unittest.mock import *
 from pyrae import dle
 import re
-from game.cell import Cell
-from game.models import Tile
 from game.tools import Tools
 
 class TestTools(unittest.TestCase):
-    def test_word_in_RAE_exists(self):
-
+    @patch('game.tools.dle.search_by_word')
+    def test_word_in_RAE_exists(self, mocked_rae):
+        mocked_rae.return_value._meta_description = '1. f. Edificio para habitar. Una casa de ocho plantas. 2. f. Edificio de una o pocas plantas destinado a vivienda unifamiliar, en oposición a piso. Quieren vender el piso y comprarse una casa.'
         word1 = 'CASA'
         exists = Tools().validate_word_in_RAE(word1)
         self.assertTrue(exists)
 
-    def test_word_in_RAE_not_exists(self):
-
+    @patch('game.tools.dle.search_by_word')
+    def test_word_in_RAE_not_exists(self, mocked_rae):
+        mocked_rae.return_value._meta_description = 'Versión electrónica 23.6 del «Diccionario de la lengua española», obra lexicográfica académica por excelencia.'
         word1 = 'ABCD'
         exists = Tools().validate_word_in_RAE(word1)
         self.assertFalse(exists)

@@ -1,6 +1,9 @@
 import unittest
 from game.player import Player
 from game.scrabble import ScrabbleGame
+from game.models import Tile
+from io import StringIO
+from unittest.mock import patch
 
 
 class TestPlayer(unittest.TestCase):
@@ -47,6 +50,18 @@ class TestPlayer(unittest.TestCase):
         original_tiles = player_1.tiles.copy()
         player_1.shuffle_tiles()
         self.assertNotEqual(original_tiles, player_1.tiles)
+
+    @patch('builtins.print')
+    def test_player_tiles(self, mock_print):
+        game = ScrabbleGame(2)
+        player_1 = game.players[0]
+        player_1.tiles = [Tile('A',1), Tile('B',1), Tile('C',1), Tile('D',1), Tile('E',1), Tile('F',1), Tile('G',1)]
+        player_1.player_tiles()
+        expected_output = "Player 1 tiles:                    ['A', 'B', 'C', 'D', 'E', 'F', 'G']"
+        mock_print.assert_called()
+
+
+
 
 if __name__ == '__main__':
     unittest.main()

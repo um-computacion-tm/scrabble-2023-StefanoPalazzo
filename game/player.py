@@ -18,3 +18,11 @@ class Player:
     def shuffle_tiles(self):
         random.shuffle(self.tiles)
 
+    def player_tiles(self):
+        print ('')
+        print ('Player', self.game.turn+1, 'tiles:')
+        tiles = []
+        for i in self.game.players[self.game.turn].tiles:
+            tiles.append(i.letter)
+        print ('                   ' , tiles)
+
