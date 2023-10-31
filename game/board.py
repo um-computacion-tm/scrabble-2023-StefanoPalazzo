@@ -84,6 +84,12 @@ class Board:
                 return True
 
     def validate_tiles_for_word(self, word, location, orientation, playerTiles):
+        word1 = ''
+        for i in word:
+            if i == 'Ñ':
+                word1 += 'Ñ'
+            else:
+                word1 += unidecode(i)
         word = unidecode(word)
         N = location[0] - 1 
         M = location[1] - 1
@@ -94,7 +100,7 @@ class Board:
             playerTilesToVerify.append(i.letter)    # Creates an array of the letters of the tiles
             if i.letter == '?':                     # Checks if the user has a wildcard
                 wildcard = True
-        for i in word:
+        for i in word1:
             if i == self.grid[N][M].letter.letter: 
                 pass
             elif i in playerTilesToVerify:
@@ -164,12 +170,19 @@ class Board:
     def validate_word_creates_valid_words_in_each_cell(self, word, location, orientation):
         N = location[0] - 1
         M = location[1] - 1
+        firstposition = [N,M]
+        if orientation == 'H':
+            lastPosition = [N, M + len(word)-1]
+        else: 
+            lastPosition = [N + len(word)-1, M]
         result = True
         NewWordsAndPositionsArray = []
         if self.grid[7][7].letter.letter == ' ':
             return (True, [])
         for i in word:
             if orientation == 'H':
+                if (self.grid[firstposition[0]][firstposition[1]-1].letter.letter != ' ') or (self.grid[lastPosition[0]][lastPosition[1]+1].letter.letter != ' '):  # Checks if it is a letter before or after the word, and returns false
+                    result = False
                 newWord = '' 
                 wordOrientation = 'V'
                 letter_added_to_new_word = False
@@ -177,6 +190,9 @@ class Board:
                 C = M
                 if self.grid[R-1][C].letter.letter == ' ' and self.grid[R+1][C].letter.letter == ' ':
                     continue
+                if self.grid[R][C].letter.letter != ' ':
+                    continue
+            
                 while self.grid[R-1][C].letter.letter != ' ':    # Checks if the cell on top has a letter and continues until it finds an emptu cell
                     R -= 1              
                 startPosition = [R+1,C+1]                           # Saves the position of the first letter of the word                           
@@ -194,12 +210,16 @@ class Board:
                 result = result and Tools().validate_word_in_dictionary_txt(newWord)  # If the word is in the dictionary this will remain True
 
             if orientation == 'V':
+                if self.grid[firstposition[0]-1][firstposition[1]].letter.letter != ' ' or self.grid[lastPosition[0]+1][lastPosition[1]].letter.letter != ' ':    # Checks if it is a letter before or after the word, and returns false
+                    result = False
                 newWord = ''
                 wordOrientation = 'H'  
                 letter_added_to_new_word = False
                 R = N
                 C = M
                 if self.grid[R][C-1].letter.letter == ' ' and self.grid[R][C+1].letter.letter == ' ':
+                    continue
+                if self.grid[R][C].letter.letter != ' ':
                     continue
                 while self.grid[R][C-1].letter.letter != ' ':    # Checks if the cell on top has a letter and continues until it finds an emptu cell
                     C -= 1           

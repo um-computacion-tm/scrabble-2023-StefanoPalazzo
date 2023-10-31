@@ -3,7 +3,9 @@ from game.player import Player
 from game.models import BagTiles, Tile
 from game.cell import Cell
 from game.tools import Tools
+# from game.main import separator
 from unidecode import unidecode
+from colorama import Fore, Back, Style
 
 class WordDoesntFitOnBoardException(Exception):
     pass
@@ -38,6 +40,13 @@ class ScrabbleGame:
         for _ in range(players_count):
             self.players.append(Player(self))
         self.turn = 0
+
+    def main_menu(self):
+        Tools().separator()
+        print ('Tiles in Bag:', len(self.bag_tiles.tiles),'                         ', Back.CYAN + 'Player', self.turn+1, 'turn' + Style.RESET_ALL, '                       ', "Player's score:", Fore.GREEN + str(self.players[self.turn].score) + Fore.WHITE )
+        Tools().separator()
+        self.board.show_board()
+        self.players[self.turn].player_tiles()
     
     def next_turn(self):
         self.turn += 1
@@ -78,6 +87,7 @@ class ScrabbleGame:
         if not v6[0]:
             raise WordCreatesNonValidWordsWithTheExistingOnes('Error! Any of the words created by your word is not valid.')
         
+
         wordToColocate = []
         N = location[0] - 1
         M = location[1] - 1 

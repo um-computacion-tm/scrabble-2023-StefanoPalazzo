@@ -324,5 +324,35 @@ class TestBoard(unittest.TestCase):
         result = (board1.validate_word_creates_valid_words_in_each_cell('AEA', [8,9], 'V'))  # We are suppossing that 'AEA' is a valid word
         self.assertTrue(result[0])
 
+    def test_validate_word_creates_valid_words_in_each_cell_vertical_first_word(self):
+        board1 = Board()
+
+        result = (board1.validate_word_creates_valid_words_in_each_cell('Leña', [8,9], 'V'))  # We are suppossing that 'AEA' is a valid word
+        self.assertTrue(result[0])
+
+    def test_validate_word_creates_valid_words_in_each_cell_horizontal_conflicting_letter_after(self):
+        board1 = Board()
+        # Word Sol in Vertical
+        board1.grid[5][7].add_letter(Tile('S', 1))
+        board1.grid[6][7].add_letter(Tile('O', 1))
+        board1.grid[7][7].add_letter(Tile('L', 1))
+
+        # Letter that will conlfict with the word 'LEÑA' -> 'LEÑAX'
+        board1.grid[7][11].add_letter(Tile('X', 1))
+        result = (board1.validate_word_creates_valid_words_in_each_cell('LEÑA', [8,8], 'H'))  # 'LEÑA' is connected to 'SOL'
+        self.assertFalse(result[0])
+
+    def test_validate_word_creates_valid_words_in_each_cell_vertical_conflicting_letter_after(self):
+        board1 = Board()
+        # Word Sol in Horizontal
+        board1.grid[7][5].add_letter(Tile('S', 1))
+        board1.grid[7][6].add_letter(Tile('O', 1))
+        board1.grid[7][7].add_letter(Tile('L', 1))
+
+        # Letter that will conlfict with the word 'LEÑA' -> 'LEÑAX'
+        board1.grid[11][7].add_letter(Tile('X', 1))
+        result = (board1.validate_word_creates_valid_words_in_each_cell('LEÑA', [8,8], 'V'))  # 'LEÑA' is connected to 'SOL'
+        self.assertFalse(result[0])
+
 if __name__ == '__main__':
     unittest.main()

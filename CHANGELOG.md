@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+
+## [0.3.1] - 2023-10-25
+
+### Modified
+
+- validate_word_creates_new_words_in_each_cell function detects if the placed word has a letter before or after
+
+### Fixed
+
+- Now the game supports 'Ñ' letter
+- Error that Summed points to the player for every word that touched the placed word
+
+
 ## [0.3.0] - 2023-10-20
 
 ### Added
