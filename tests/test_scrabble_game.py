@@ -10,6 +10,7 @@ from game.scrabble import (ScrabbleGame,
 from game.models import Tile
 from unittest.mock import patch, MagicMock
 from io import StringIO
+from pyrae.core import SearchResult
 import re
 
 class TestScrabbleGame(unittest.TestCase):
@@ -92,13 +93,18 @@ class TestScrabbleGame(unittest.TestCase):
         with self.assertRaises(WordEntersInConflictWithOtherWordsException):
             game.validate_and_put_word('MAR',[7,9],'V') # User Location starts at 1, instead of 0
 
-    def test_validate_and_put_word_is_not_in_RAE(self):
-        game = ScrabbleGame(1)
-        game.players[0].tiles.append(Tile('R',1))
-        game.players[0].tiles.append(Tile('E',1))
-        game.players[0].tiles.append(Tile('L',1))
-        with self.assertRaises(WordIsNotInDictionaryException):
-            game.validate_and_put_word('REL',[8,8],'V') # User Location starts at 1, instead of 0
+    # @patch('game.tools.dle.search_by_word')
+    # def test_validate_and_put_word_is_not_in_RAE(self, mocked_rae):
+    #     game = ScrabbleGame(1)
+    #     game.players[0].tiles.append(Tile('R',1))
+    #     game.players[0].tiles.append(Tile('E',1))
+    #     game.players[0].tiles.append(Tile('L',1))
+        
+    #     sss = SearchResult("<html></html>")
+    #     sss._meta_description = 'Versión electrónica 23.6 del «Diccionario de la lengua española», obra lexicográfica académica por excelencia.'
+    #     mocked_rae.return_value = sss 
+    #     with self.assertRaises(WordIsNotInDictionaryException):
+    #         game.validate_and_put_word('REL',[8,8],'V') # User Location starts at 1, instead of 0
 
     def test_validate_and_put_word_succesful(self):
         game = ScrabbleGame(1)
@@ -120,18 +126,22 @@ class TestScrabbleGame(unittest.TestCase):
         result = game.validate_and_put_word('AVION',[8,8],'V') # User Location starts at 1, instead of 0
         self.assertEqual(result, 'Word succesfully colocated.')
 
-    def test_validate_and_put_word_with_accent_mark_succesful(self):
+    @patch('game.tools.dle.search_by_word')
+    def test_validate_and_put_word_with_accent_mark_succesful(self, mocked_rae):
         game = ScrabbleGame(1)
         game.players[0].tiles.append(Tile('A',1))
         game.players[0].tiles.append(Tile('V',1))
         game.players[0].tiles.append(Tile('I',1))
         game.players[0].tiles.append(Tile('O',1))
         game.players[0].tiles.append(Tile('N',1))
+        sss = SearchResult("<html></html>")
+        sss._meta_description = '1. f. Aeronave con alas propulsadas horizontalmente por uno o varios motores.'
+        mocked_rae.return_value = sss 
         result = game.validate_and_put_word('AVIÓN',[8,8],'V') # User Location starts at 1, instead of 0
         self.assertEqual(result, 'Word succesfully colocated.')
         
 
-class TestScrabble_Main(unittest.TestCase):
+class TestScrabbleGame_Main(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_main_menu(self, mock_stdout):

@@ -31,6 +31,9 @@ class WordIsNotInDictionaryException(Exception):
 class WordCreatesNonValidWordsWithTheExistingOnes(Exception):
     pass
 
+class UserDoesntHaveConnection(Exception):
+    pass
+
 
 class ScrabbleGame:
     def __init__(self, players_count):
@@ -77,11 +80,14 @@ class ScrabbleGame:
 
         v5 = Tools().validate_word_in_dictionary_txt(word)
         
-        if not v5:
-            v6 = Tools().validate_word_in_RAE(word)
-            if not v6:
-                raise WordIsNotInDictionaryException ('Error! Word was not found in RAE dictionary')
-        
+        try:
+            if not v5:
+                v6 = Tools().validate_word_in_RAE(word)
+                if not v6:
+                    raise WordIsNotInDictionaryException ('Error! Word was not found in RAE dictionary')
+        except:
+            raise UserDoesntHaveConnection('Error! Scrabble Game needs internet connection.')
+
         v6 = self.board.validate_word_creates_valid_words_in_each_cell(word, location, orientation)
         
         if not v6[0]:
