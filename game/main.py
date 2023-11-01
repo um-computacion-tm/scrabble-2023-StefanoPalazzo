@@ -6,7 +6,8 @@ from game.scrabble import (ScrabbleGame,
                            WordIsNotConnectedException,
                            WordIsNotInDictionaryException,
                            wordDoesntPassesByTheCenterException,
-                           WordCreatesNonValidWordsWithTheExistingOnes)
+                           WordCreatesNonValidWordsWithTheExistingOnes,
+                           UserDoesntHaveConnection)
 from game.player import Player
 from game.board import Board
 from game.cell import Cell
@@ -116,8 +117,11 @@ def start_game():
                     print(e)
                 except WordIsNotInDictionaryException as e:
                     print(e)
+                except UserDoesntHaveConnection as e:
+                    print(e)
                 except WordCreatesNonValidWordsWithTheExistingOnes as e:
                     print(e)
+
 
             elif option == 'C':
                 game.players[game.turn].shuffle_tiles()
