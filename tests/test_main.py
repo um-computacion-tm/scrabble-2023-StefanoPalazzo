@@ -4,7 +4,7 @@ from unittest.mock import patch, Mock
 from game.models import Tile
 from io import StringIO
 from game.board import Board
-from game.main import *
+from game.scrabblecli import *
 import re
 
 class TestMain(unittest.TestCase):
@@ -121,19 +121,19 @@ class TestMain(unittest.TestCase):
     @patch('builtins.input', side_effect=['2', 'B', 'HELLO', '1', '1', 'H', 'E', 'N', 'D', 'E'])
     def test_start_game(self, mock_input):
         with patch('sys.stdout', new=StringIO()) as mock_output:
-            start_game()
+            ScrabbleCli()
             assert 'The winner is player None with 0 points' in mock_output.getvalue()
     
     @patch('builtins.input', side_effect=['2', 'K', 'E'])
     def test_invalid_option(self, mock_input):
         with patch('sys.stdout', new=StringIO()) as mock_output:
-            start_game()
+            ScrabbleCli()
             assert 'Error! Please, choose a valid option:' in mock_output.getvalue()
 
     @patch('builtins.input', side_effect=['3', 'D', 'D', 'E'])
     def test_next_turn(self, mock_input):
         with patch('sys.stdout', new=StringIO()) as mock_output:
-            start_game()
+            ScrabbleCli()
             assert 'Player 3 turn' in mock_output.getvalue()
 
     # @patch('builtins.input', side_effect=['2', 'A', 'fs', '1' 'E'])
@@ -153,7 +153,7 @@ class TestMain(unittest.TestCase):
     @patch('builtins.input', side_effect=['3', 'A', 'AKGADD', '1', 'E'])
     def test_foo_three(self,mock_input):
         with mock.patch('sys.stdout') as fake_stdout:
-            start_game()
+            ScrabbleCli()
 
         fake_stdout.assert_has_calls([
             mock.call.write('Error! Please enter valid tile positions between 1 and 7.'),
