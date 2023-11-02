@@ -7,8 +7,10 @@ RUN apk add git
 RUN apk add bash
 
 
+
 RUN git clone https://github.com/um-computacion-tm/scrabble-2023-StefanoPalazzo
 WORKDIR /scrabble-2023-StefanoPalazzo
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-CMD ["sh", "-c", "coverage run -m unittest && coverage report -m && python3 -m game.main"]
+CMD [ "sh", "-c", "coverage run -m unittest && coverage report -m && python -m ./scrabble-2023-StefanoPalazzo/main " ]

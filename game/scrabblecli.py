@@ -49,7 +49,7 @@ class ScrabbleCli():
         print ('                    A- Exchange Tiles   B- Put word   C- Shuffle   D - Skip Turn   E - End Game')
         while True:
             option = input('').upper()
-            if option == 'A' or option == 'B' or option == 'C' or option == 'D' or option == 'E' or option == '':
+            if option in ['A', 'B', 'C', 'D', 'E', '']:
                 break
             else:
                 print ('Error! Please, choose a valid option: ')
