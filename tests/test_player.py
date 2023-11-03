@@ -32,7 +32,7 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(len(bag),90)
         TilesZero = bag.copy()
         player_2.exchange([0,4,6])
-        self.assertNotEqual(TilesZero,player_2.tiles)
+        self.assertNotEqual(TilesZero,player_2.tiles)   # Conflicting line with docker
         self.assertEqual(len(TilesZero),len(bag))
         self.assertEqual(len(bag),90)
 
