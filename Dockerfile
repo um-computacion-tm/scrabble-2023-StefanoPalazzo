@@ -13,4 +13,4 @@ WORKDIR /scrabble-2023-StefanoPalazzo
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-CMD [ "sh", "-c", "coverage run -m unittest && coverage report -m && python -m ./scrabble-2023-StefanoPalazzo/main " ]
+CMD ["sh", "-c", "cd scrabble-2023-StefanoPalazzo/ && coverage run -m unittest && coverage report -m && python3 -m game.main"]
