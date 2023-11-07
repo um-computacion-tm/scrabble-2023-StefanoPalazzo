@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 if [ ! -f "/usr/local/bin/codeclimate" ]
 then
 	curl -L https://github.com/codeclimate/codeclimate/archive/master.tar.gz | tar xvz -C /home/$USER/
@@ -8,4 +7,5 @@ then
 fi
 
 codeclimate engines:install
+coverage run -m unittest && coverage report -m
 codeclimate analyze

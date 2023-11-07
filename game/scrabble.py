@@ -94,21 +94,7 @@ class ScrabbleGame:
             raise WordCreatesNonValidWordsWithTheExistingOnes('Error! Any of the words created by your word is not valid.')
         
 
-        wordToColocate = []
-        N = location[0] - 1
-        M = location[1] - 1 
-        for i in word:
-            if unidecode(self.board.grid[N][M].letter.letter) != ' ':        # Checks if the cell is empty     
-                    wordToColocate.append(self.board.grid[N][M].letter)  # Appends the tile in the board
-            else:
-                for j in playerTiles: 
-                    if i == j.letter:
-                        wordToColocate.append(playerTiles.pop(playerTiles.index(j))) # Appends the tile of the user
-                        break
-            if orientation == 'H':
-                M += 1
-            elif orientation == 'V':
-                N += 1
+        wordToColocate = self.word_to_colocate(word, location, orientation, playerTiles)
             
         self.board.put_words(wordToColocate, location, orientation)
         playerTiles.extend(self.bag_tiles.take(7 - len(self.players[self.turn].tiles)))  # User takes tiles from the bag
@@ -126,7 +112,23 @@ class ScrabbleGame:
         return ('Word succesfully colocated.')
 
     
-
+    def word_to_colocate(self, word, location, orientation, playerTiles):
+        wordToColocate = []
+        N = location[0] - 1
+        M = location[1] - 1 
+        for i in word:
+            if unidecode(self.board.grid[N][M].letter.letter) != ' ':        # Checks if the cell is empty     
+                    wordToColocate.append(self.board.grid[N][M].letter)  # Appends the tile in the board
+            else:
+                for j in playerTiles: 
+                    if i == j.letter:
+                        wordToColocate.append(playerTiles.pop(playerTiles.index(j))) # Appends the tile of the user
+                        break
+            if orientation == 'H':
+                M += 1
+            elif orientation == 'V':
+                N += 1
+        return wordToColocate
 
 
 

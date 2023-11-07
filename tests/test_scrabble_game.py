@@ -108,8 +108,7 @@ class TestScrabbleGame(unittest.TestCase):
 
     def test_validate_and_put_word_succesful(self):
         game = ScrabbleGame(1)
-        game.board.grid[7][7].letter = Tile('T',1)
-        game.board.grid[7][8].letter = Tile('E',1)
+        game.board.put_words([Tile('T',1),Tile('E',1)], [8,8], 'H')
         game.players[0].tiles.append(Tile('V',1))
         game.players[0].tiles.append(Tile('E',1))
         game.players[0].tiles.append(Tile('R',1))

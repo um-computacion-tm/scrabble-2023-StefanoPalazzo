@@ -93,8 +93,12 @@ class ScrabbleCli():
             else:
                 print('Error! Please type a valid orientation.')
         os.system('clear')
+        location = [N, M]
+        self.put_word_and_exceptions(game, word, location, Orientation)
+    
+    def put_word_and_exceptions(self, game,word, location, orientation): 
         try:
-            game.validate_and_put_word(word,[N,M], Orientation)
+            game.validate_and_put_word(word,location, orientation)
         except UserDoesntHaveTilesException as e:
             print(e)
         except WordIsNotNewException as e:
@@ -113,7 +117,8 @@ class ScrabbleCli():
             print(e)
         except WordCreatesNonValidWordsWithTheExistingOnes as e:
             print(e)
-    
+        
+
     def option_E(self,game):
         maxValue = 0
         winner = None
