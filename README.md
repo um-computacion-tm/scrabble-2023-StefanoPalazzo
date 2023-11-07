@@ -54,9 +54,9 @@ docker run -it juegoscrabbledocker
 
 # Author Information
 
-Name: Stefano Palazzo
-Instagram: @stefanopalazzo_
-Country: Argentina
-Year: 2023
+- Name: Stefano Palazzo
+- Instagram: @stefanopalazzo_
+- Country: Argentina
+- Year: 2023
 
 [![StefanoPalazzo's github stats](https://github-readme-stats.vercel.app/api?username=StefanoPalazzo&theme=blue-green)](https://github.com/um-computacion-tm/scrabble-2023-StefanoPalazzo)
